@@ -69,7 +69,7 @@ task decompServer(type: Exec) {
 
     commandLine = ['java', '-jar', vfJar,
         '-din=1', '-rbr=1', '-dgs=1', '-asc=1', '-rsy=1',
-        '--indent-string=    ', '--excluded-classes=.*package-info'
+        '--excluded-classes=.*package-info'
     ] + libArgs + [inputJar, outputDir]
 }
 
@@ -89,7 +89,7 @@ task decompClient(type: Exec) {
 
     commandLine = ['java', '-jar', vfJar,
         '-din=1', '-rbr=1', '-dgs=1', '-asc=1', '-rsy=1',
-        '--indent-string=    ', '--excluded-classes=.*package-info'
+        '--excluded-classes=.*package-info'
     ] + libArgs + [inputJar, outputDir]
 }
 
