@@ -149,6 +149,26 @@ task genModsClient {
 
 task genMods { group = 'mods'; dependsOn genModsServer, genModsClient }
 
+task packServer {
+    group = 'mods'
+    dependsOn ':server:compileJava'
+    doLast {
+        Mod.pack(file('patchSrc/server-base.zip'), file('server/src/main/java'),
+            file('server/build/classes/java/main'), file('mods/server.zip'))
+    }
+}
+
+task packClient {
+    group = 'mods'
+    dependsOn ':client:compileJava'
+    doLast {
+        Mod.pack(file('patchSrc/client-base.zip'), file('client/src/main/java'),
+            file('client/build/classes/java/main'), file('mods/client.zip'))
+    }
+}
+
+task pack { group = 'mods'; dependsOn packServer, packClient }
+
 task genPatchServer {
     group = 'patches'
     doLast {

@@ -1,0 +1,16 @@
+{
+    "formatVersion": 1,
+    "mainJar": {
+        "downloads": {
+            "artifact": {
+                "sha1": "8e75db09feb89eec8ed7f2a2ae779b3fb1fb7f18",
+                "size": 36734143,
+                "url": "https://piston-data.mojang.com/v1/objects/8e75db09feb89eec8ed7f2a2ae779b3fb1fb7f18/client.jar"
+            }
+        },
+        "name": "com.mojang:minecraft:1.21.11-rc2-unobfuscated:client"
+    },
+    "name": "Unobfuscated",
+    "uid": "custom.unobfuscated",
+    "version": "1.21.11-rc2"
+}

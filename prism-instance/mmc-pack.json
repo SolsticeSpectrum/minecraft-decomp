@@ -1,0 +1,21 @@
+{
+    "components": [
+        {
+            "uid": "org.lwjgl3",
+            "version": "3.3.3",
+            "dependencyOnly": true
+        },
+        {
+            "uid": "net.minecraft",
+            "version": "1.21.11-rc2",
+            "important": true
+        },
+        {
+            "uid": "custom.unobfuscated"
+        },
+        {
+            "uid": "custom.mods"
+        }
+    ],
+    "formatVersion": 1
+}

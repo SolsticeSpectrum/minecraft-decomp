@@ -22,6 +22,7 @@ server/src/
 client/src/
 server/bin/
 client/bin/
+*.zip
 
 # Run directories
 run/
