@@ -1,40 +1,40 @@
 --- a/net/minecraft/world/level/GameType.java	2025-11-26 19:52:22.000000000 +0100
 +++ b/net/minecraft/world/level/GameType.java	2025-11-26 20:22:10.681407662 +0100
 @@ -70,7 +70,7 @@
-          abilities.invulnerable = true;
-          abilities.flying = true;
-       } else {
--         abilities.mayfly = false;
-+         abilities.mayfly = true;
-          abilities.instabuild = false;
-          abilities.invulnerable = false;
-          abilities.flying = false;
+             abilities.invulnerable = true;
+             abilities.flying = true;
+         } else {
+-            abilities.mayfly = false;
++            abilities.mayfly = true;
+             abilities.instabuild = false;
+             abilities.invulnerable = false;
+             abilities.flying = false;
 --- a/net/minecraft/world/entity/player/Player.java	2025-11-26 19:52:22.000000000 +0100
 +++ b/net/minecraft/world/entity/player/Player.java	2025-11-26 20:18:12.538330216 +0100
 @@ -1393,6 +1393,23 @@
-             double originalMovementY = this.getDeltaMovement().y;
-             super.travel(input);
-             this.setDeltaMovement(this.getDeltaMovement().with(Direction.Axis.Y, originalMovementY * 0.6));
+                 double originalMovementY = this.getDeltaMovement().y;
+                 super.travel(input);
+                 this.setDeltaMovement(this.getDeltaMovement().with(Direction.Axis.Y, originalMovementY * 0.6));
 +
-+            if (this.random.nextFloat() < 0.4F) {
-+               for (int i = 0; i < 8; i++) {
-+                  double angle = this.random.nextDouble() * Math.PI * 2.0;
-+                  double radius = Math.sqrt(this.random.nextDouble()) * 2.0;
-+                  double xOff = Math.cos(angle) * radius;
-+                  double zOff = Math.sin(angle) * radius;
++                if (this.random.nextFloat() < 0.4F) {
++                    for (int i = 0; i < 8; i++) {
++                        double angle = this.random.nextDouble() * Math.PI * 2.0;
++                        double radius = Math.sqrt(this.random.nextDouble()) * 2.0;
++                        double xOff = Math.cos(angle) * radius;
++                        double zOff = Math.sin(angle) * radius;
 +
-+                  this.level().addParticle(
-+                     ParticleTypes.CLOUD,
-+                     this.getX() + xOff,
-+                     this.getY() - 0.5,
-+                     this.getZ() + zOff,
-+                     0.0, -0.05, 0.0
-+                  );
-+               }
-+            }
-          } else {
-             super.travel(input);
-          }
++                        this.level().addParticle(
++                            ParticleTypes.CLOUD,
++                            this.getX() + xOff,
++                            this.getY() - 0.5,
++                            this.getZ() + zOff,
++                            0.0, -0.05, 0.0
++                        );
++                    }
++                }
+             } else {
+                 super.travel(input);
+             }
 --- a/net/minecraft/world/entity/projectile/arrow/Arrow.java	2025-11-26 19:52:22.000000000 +0100
 +++ b/net/minecraft/world/entity/projectile/arrow/Arrow.java	2025-11-26 20:12:41.596937049 +0100
 @@ -13,6 +13,7 @@
@@ -46,17 +46,17 @@
  import org.jspecify.annotations.Nullable;
  
 @@ -73,6 +74,14 @@
-    @Override
-    public void tick() {
-       super.tick();
-+      if (this.isInGround()) {
-+         this.level().explode(
-+            this, Explosion.getDefaultDamageSource(this.level(), this),
-+            null, this.getX(), this.getY(0.0625), this.getZ(),
-+            4.0F, false, Level.ExplosionInteraction.TNT
-+         );
-+         this.remove(Entity.RemovalReason.KILLED);
-+      }
-       if (this.level().isClientSide()) {
-          if (this.isInGround()) {
-             if (this.inGroundTime % 5 == 0) {
+     @Override
+     public void tick() {
+         super.tick();
++        if (this.isInGround()) {
++            this.level().explode(
++                this, Explosion.getDefaultDamageSource(this.level(), this),
++                null, this.getX(), this.getY(0.0625), this.getZ(),
++                4.0F, false, Level.ExplosionInteraction.TNT
++            );
++            this.remove(Entity.RemovalReason.KILLED);
++        }
+         if (this.level().isClientSide()) {
+             if (this.isInGround()) {
+                 if (this.inGroundTime % 5 == 0) {
