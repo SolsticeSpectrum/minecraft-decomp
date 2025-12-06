@@ -35,6 +35,15 @@ For client, grab assets first:
 ./gradlew downloadAssets
 ```
 
+## IntelliJ IDEA
+
+Run `runClient`/`runServer` once before opening.
+
+Hot reload requires JetBrains Runtime in Project Structure, IDEA must run under it too:
+```bash
+export IDEA_JDK="/usr/lib/jvm/java-21-jetbrains"
+```
+
 ## Structure
 
 ```
