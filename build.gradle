@@ -111,63 +111,46 @@ task snapClient {
     }
 }
 
-task modsServer {
+task modApply {
     group = 'mods'
-    dependsOn snapServer
     doLast {
-        Patcher.apply(file('server/src/main/java'), file('mods/server.patch'))
+        def p = project.hasProperty('args') ? project.args.split(',') : null
+        if (!p || p.length < 2) throw new RuntimeException("Usage: -Pargs=side,mod1,mod2")
+        Mod.apply(rootDir, p[0], p[1..-1] as String[])
     }
 }
 
-task modsClient {
+task modRevert {
     group = 'mods'
-    dependsOn snapClient
     doLast {
-        Patcher.apply(file('client/src/main/java'), file('mods/client.patch'))
+        def p = project.hasProperty('args') ? project.args.split(',') : null
+        if (!p || p.length < 2) throw new RuntimeException("Usage: -Pargs=side,mod1,mod2")
+        Mod.revert(rootDir, p[0], p[1..-1] as String[])
     }
 }
 
-task setupServer { group = 'setup'; dependsOn modsServer }
-task setupClient { group = 'setup'; dependsOn modsClient }
+task modGen {
+    group = 'mods'
+    doLast {
+        def p = project.hasProperty('args') ? project.args.split(',') : null
+        if (!p || p.length != 2) throw new RuntimeException("Usage: -Pargs=side,name")
+        Mod.gen(rootDir, p[0], p[1])
+    }
+}
+
+task modPack {
+    group = 'mods'
+    dependsOn ':client:compileJava', ':server:compileJava'
+    doLast {
+        def p = project.hasProperty('args') ? project.args.split(',') : null
+        if (!p || p.length < 2) throw new RuntimeException("Usage: -Pargs=side,mod1,mod2")
+        Mod.pack(rootDir, p[0], p[1..-1] as String[])
+    }
+}
+
+task setupServer { group = 'setup'; dependsOn snapServer }
+task setupClient { group = 'setup'; dependsOn snapClient }
 task setup { group = 'setup'; dependsOn setupServer, setupClient }
-
-task genModsServer {
-    group = 'mods'
-    doLast {
-        Patcher.diff(file('patchSrc/server-base.zip'), file('server/src/main/java'),
-            file('mods/server.patch'), true)
-    }
-}
-
-task genModsClient {
-    group = 'mods'
-    doLast {
-        Patcher.diff(file('patchSrc/client-base.zip'), file('client/src/main/java'),
-            file('mods/client.patch'), true)
-    }
-}
-
-task genMods { group = 'mods'; dependsOn genModsServer, genModsClient }
-
-task packServer {
-    group = 'mods'
-    dependsOn ':server:compileJava'
-    doLast {
-        Mod.pack(file('patchSrc/server-base.zip'), file('server/src/main/java'),
-            file('server/build/classes/java/main'), file('mods/server.zip'))
-    }
-}
-
-task packClient {
-    group = 'mods'
-    dependsOn ':client:compileJava'
-    doLast {
-        Mod.pack(file('patchSrc/client-base.zip'), file('client/src/main/java'),
-            file('client/build/classes/java/main'), file('mods/client.zip'))
-    }
-}
-
-task pack { group = 'mods'; dependsOn packServer, packClient }
 
 task genPatchServer {
     group = 'patches'

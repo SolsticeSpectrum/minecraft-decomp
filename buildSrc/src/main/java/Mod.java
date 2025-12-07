@@ -5,6 +5,43 @@ import java.util.zip.*;
 
 public class Mod {
 
+    public static void apply(File root, String side, String[] names) throws Exception {
+        for (String name : names) {
+            File patch = new File(root, "mods/" + side + "/" + name + ".patch");
+
+            if (!patch.exists()) throw new RuntimeException("Patch not found: " + patch);
+            Patcher.apply(new File(root, side + "/src/main/java"), patch);
+        }
+    }
+
+    public static void revert(File root, String side, String[] names) throws Exception {
+        for (int i = names.length - 1; i >= 0; i--) {
+            File patch = new File(root, "mods/" + side + "/" + names[i] + ".patch");
+
+            if (!patch.exists()) throw new RuntimeException("Patch not found: " + patch);
+            Patcher.unapply(new File(root, side + "/src/main/java"), patch);
+        }
+    }
+
+    public static void gen(File root, String side, String name) throws Exception {
+        File base = new File(root, "patchSrc/" + side + "-base.zip");
+        File src = new File(root, side + "/src/main/java");
+        File out = new File(root, "mods/" + side + "/" + name + ".patch");
+
+        Patcher.diff(base, src, out, true);
+    }
+
+    public static void pack(File root, String side, String[] names) throws Exception {
+        apply(root, side, names);
+
+        File base = new File(root, "patchSrc/" + side + "-base.zip");
+        File src = new File(root, side + "/src/main/java");
+        File classes = new File(root, side + "/build/classes/java/main");
+        File out = new File(root, "mods/" + side + ".zip");
+
+        pack(base, src, classes, out);
+    }
+
     public static void pack(File base, File src, File classes, File out) throws Exception {
         if (!base.exists()) throw new RuntimeException("Run setup first");
 

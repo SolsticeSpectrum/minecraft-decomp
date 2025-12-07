@@ -47,36 +47,58 @@ export IDEA_JDK="/usr/lib/jvm/java-21-jetbrains"
 ## Structure
 
 ```
-├── jars/           # vanilla jars
-├── libs/           # decompiler linking libs
-├── patches/        # decompiler fixes
-├── mods/           # your modifications (.patch and .zip)
-├── server/src/     # server source
-├── client/src/     # client source
-└── prism-instance/ # PrismLauncher instance template
+├── jars/              # vanilla jars
+├── libs/              # decompiler linking libs
+├── patches/           # decompiler fixes
+├── mods/
+│   ├── client/        # client patches (mymod.patch)
+│   └── server/        # server patches (mymod.patch)
+├── server/src/        # server source
+├── client/src/        # client source
+└── prism-instance/    # PrismLauncher instance template
 ```
 
 ## Modding
 
 Two-layer patch system:
 1. `patches/` - fixes for decompiler output (don't touch)
-2. `mods/` - your changes
+2. `mods/client/` and `mods/server/` - your named patches
 
-Edit source, test, then generate patches:
+Edit source, test, then generate a named patch:
 ```bash
-./gradlew genClientMods
-./gradlew genServerMods
+./gradlew modGen -Pargs=client,mymod
+./gradlew modGen -Pargs=server,mymod
+```
+
+This saves to `mods/client/mymod.patch` or `mods/server/mymod.patch`.
+
+### Applying Mods
+
+Apply named patches to the source:
+```bash
+./gradlew modApply -Pargs=client,mod1,mod2,mod3
+./gradlew modApply -Pargs=server,mod1,mod2,mod3
+```
+
+Patches are applied in order. If a patch fails, it likely depends on another.
+
+### Reverting Mods
+
+Reverse patches (in reverse order):
+```bash
+./gradlew modRevert -Pargs=client,mod1,mod2,mod3
+./gradlew modRevert -Pargs=server,mod1,mod2,mod3
 ```
 
 ### Packing Mods
 
 Pack changed classes into a zip for distribution:
 ```bash
-./gradlew packClient
-./gradlew packServer
+./gradlew modPack -Pargs=client,mod1,mod2,mod3
+./gradlew modPack -Pargs=server,mod1,mod2,mod3
 ```
 
-This compares your source against the base, finds modified files, and outputs them to `mods/client.zip` or `mods/server.zip`.
+This applies the patches first, then compares against the base and outputs to `mods/client.zip` or `mods/server.zip`.
 
 ### Using with PrismLauncher
 

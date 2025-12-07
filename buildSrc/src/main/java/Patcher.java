@@ -11,6 +11,12 @@ public class Patcher {
         run(dir, "patch", "-p1", "-i", patch.getAbsolutePath());
     }
 
+    public static void unapply(File dir, File patch) throws Exception {
+        if (!patch.exists()) return;
+
+        run(dir, "patch", "-R", "-p1", "-i", patch.getAbsolutePath());
+    }
+
     public static void snap(File src, File dest) throws IOException {
         dest.getParentFile().mkdirs();
 
