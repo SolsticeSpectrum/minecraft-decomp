@@ -1,5 +1,5 @@
---- a/net/minecraft/world/level/GameType.java	2025-11-26 19:52:22.000000000 +0100
-+++ b/net/minecraft/world/level/GameType.java	2025-11-26 20:22:10.681407662 +0100
+--- a/net/minecraft/world/level/GameType.java
++++ b/net/minecraft/world/level/GameType.java
 @@ -70,7 +70,7 @@
              abilities.invulnerable = true;
              abilities.flying = true;
@@ -9,32 +9,27 @@
              abilities.instabuild = false;
              abilities.invulnerable = false;
              abilities.flying = false;
---- a/net/minecraft/world/entity/player/Player.java	2025-11-26 19:52:22.000000000 +0100
-+++ b/net/minecraft/world/entity/player/Player.java	2025-11-26 20:18:12.538330216 +0100
-@@ -1401,6 +1401,21 @@
+--- a/net/minecraft/world/entity/player/Player.java
++++ b/net/minecraft/world/entity/player/Player.java
+@@ -1401,6 +1401,16 @@
                  double originalMovementY = this.getDeltaMovement().y;
                  super.travel(input);
                  this.setDeltaMovement(this.getDeltaMovement().with(Direction.Axis.Y, originalMovementY * 0.6));
 +                if (this.random.nextFloat() < 0.4F) {
 +                    for (int i = 0; i < 8; i++) {
-+                        double a = this.random.nextDouble() * Math.PI * 2.0;
++                        double t = this.random.nextDouble() * Math.PI * 2.0;
 +                        double r = Math.sqrt(this.random.nextDouble()) * 2.0;
-+                        double dx = Math.cos(a) * r;
-+                        double dz = Math.sin(a) * r;
++                        double dx = Math.cos(t) * r, dz = Math.sin(t) * r;
 +                        this.level().addParticle(
-+                            ParticleTypes.CLOUD,
-+                            this.getX() + dx,
-+                            this.getY() - 0.5,
-+                            this.getZ() + dz,
-+                            0.0, -0.05, 0.0
++                            ParticleTypes.CLOUD, this.getX() + dx, this.getY() - 0.5, this.getZ() + dz, 0.0, -0.05, 0.0
 +                        );
 +                    }
 +                }
              } else {
                  super.travel(input);
              }
---- a/net/minecraft/world/entity/projectile/arrow/Arrow.java	2025-11-26 19:52:22.000000000 +0100
-+++ b/net/minecraft/world/entity/projectile/arrow/Arrow.java	2025-11-26 20:12:41.596937049 +0100
+--- a/net/minecraft/world/entity/projectile/arrow/Arrow.java
++++ b/net/minecraft/world/entity/projectile/arrow/Arrow.java
 @@ -13,6 +13,7 @@
  import net.minecraft.world.item.ItemStack;
  import net.minecraft.world.item.Items;
@@ -43,16 +38,14 @@
  import net.minecraft.world.level.Level;
  import org.jspecify.annotations.Nullable;
 
-@@ -73,6 +74,14 @@
+@@ -73,6 +74,12 @@
      @Override
      public void tick() {
          super.tick();
 +        if (this.isInGround()) {
 +            this.level().explode(
-+                this, Explosion.getDefaultDamageSource(this.level(), this),
-+                null, this.getX(), this.getY(0.0625), this.getZ(),
-+                4.0F, false, Level.ExplosionInteraction.TNT
-+            );
++                this, Explosion.getDefaultDamageSource(this.level(), this), null,
++                this.getX(), this.getY(0.0625), this.getZ(), 4.0F, false, Level.ExplosionInteraction.TNT);
 +            this.remove(Entity.RemovalReason.KILLED);
 +        }
          if (this.level().isClientSide()) {

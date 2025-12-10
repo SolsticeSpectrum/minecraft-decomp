@@ -25,7 +25,7 @@
          register(registry, "spline", DensityFunctions.Spline.CODEC);
          register(registry, "constant", DensityFunctions.Constant.CODEC);
          register(registry, "y_clamped_gradient", DensityFunctions.YClampedGradient.CODEC);
-+        register(registry, "planetoids", DensityFunctions.Planetoids.CODEC);
++        register(registry, "trefoil", DensityFunctions.Trefoil.CODEC);
          return register(registry, "find_top_surface", DensityFunctions.FindTopSurface.CODEC);
      }
 
@@ -33,68 +33,71 @@
          return new DensityFunctions.FindTopSurface(density, upperBound, lowerBound, stepSize);
      }
 
-+    public static DensityFunction planetoids(final int min, final int max, final int gap) {
-+        return new DensityFunctions.Planetoids(min, max, gap);
++    public static DensityFunction trefoil(final int scale, final int thick, final int gap) {
++        return new DensityFunctions.Trefoil(scale, thick, gap);
 +    }
 +
      private record Ap2(
          DensityFunctions.TwoArgumentSimpleFunction.Type type, DensityFunction argument1, DensityFunction argument2, double minValue, double maxValue
      ) implements DensityFunctions.TwoArgumentSimpleFunction {
-@@ -1391,6 +1396,72 @@
+@@ -1391,6 +1396,62 @@
          }
      }
 
-+    protected record Planetoids(int min, int max, int gap) implements DensityFunction.SimpleFunction {
-+        private static final MapCodec<DensityFunctions.Planetoids> DATA_CODEC = RecordCodecBuilder.mapCodec(
++    protected record Trefoil(int scale, int thick, int gap) implements DensityFunction.SimpleFunction {
++        private static final MapCodec<DensityFunctions.Trefoil> DATA_CODEC = RecordCodecBuilder.mapCodec(
 +            i -> i.group(
-+                    Codec.INT.fieldOf("min").forGetter(DensityFunctions.Planetoids::min),
-+                    Codec.INT.fieldOf("max").forGetter(DensityFunctions.Planetoids::max),
-+                    Codec.INT.fieldOf("gap").forGetter(DensityFunctions.Planetoids::gap)
++                    Codec.INT.fieldOf("scale").forGetter(DensityFunctions.Trefoil::scale),
++                    Codec.INT.fieldOf("thick").forGetter(DensityFunctions.Trefoil::thick),
++                    Codec.INT.fieldOf("gap").forGetter(DensityFunctions.Trefoil::gap)
 +                )
-+                .apply(i, DensityFunctions.Planetoids::new)
++                .apply(i, DensityFunctions.Trefoil::new)
 +        );
-+        public static final KeyDispatchDataCodec<DensityFunctions.Planetoids> CODEC = DensityFunctions.makeCodec(DATA_CODEC);
-+        private static final int Y_MIN = -64, Y_MAX = 320;
++        public static final KeyDispatchDataCodec<DensityFunctions.Trefoil> CODEC = DensityFunctions.makeCodec(DATA_CODEC);
++        private static final java.util.Map<Long, java.util.Set<Long>> CACHE = new java.util.concurrent.ConcurrentHashMap<>();
 +
-+        private long hash(final long a, final long b, final long c) {
-+            long h = a * 3129871L ^ b * 116129781L ^ c * 982451653L;
-+            h = h * h * 42317861L + h * 11L;
-+            return h;
++        private static long key(final int s, final int t) {
++            return ((long) s << 32) | (t & 0xFFFFFFFFL);
 +        }
 +
-+        private int rad(final int cx, final int cy, final int cz) {
-+            long h = hash(cx, cy, cz);
-+            return this.min + (int) ((h & 0x7FFFFFFFL) % (this.max - this.min + 1));
++        private static long pack(final int x, final int y, final int z) {
++            return ((long) (x + 128) << 16) | ((long) (y + 128) << 8) | (z + 128);
 +        }
 +
-+        private int off(final int cx, final int cy, final int cz, final int r, final int seed) {
-+            long h = hash(cx + seed, cy + seed * 2, cz + seed * 3);
-+            int m = (this.gap - r * 2) / 2;
-+            if (m <= 0) return 0;
-+            return (int) ((h & 0x7FFFFFFFL) % (m * 2 + 1)) - m;
++        private java.util.Set<Long> shape() {
++            return CACHE.computeIfAbsent(key(this.scale, this.thick), k -> build(this.scale, this.thick));
++        }
++
++        private static java.util.Set<Long> build(final int scale, final int thick) {
++            java.util.Set<Long> out = new java.util.HashSet<>();
++            int n = 512, rr = thick * thick, b = 3 * scale + thick;
++            for (int x = -b; x <= b; x++) {
++                for (int y = -scale - thick; y <= scale + thick; y++) {
++                    for (int z = -b; z <= b; z++) {
++                        double min = Double.MAX_VALUE;
++                        for (int i = 0; i < n; i++) {
++                            double t = (i * 2.0 * Math.PI) / n;
++                            double a = 2.0 + Math.cos(3.0 * t);
++                            double kx = a * Math.cos(2.0 * t) * scale, ky = Math.sin(3.0 * t) * scale, kz = a * Math.sin(2.0 * t) * scale;
++                            double dx = x - kx, dy = y - ky, dz = z - kz;
++                            double d = dx * dx + dy * dy + dz * dz;
++                            if (d < min) min = d;
++                        }
++                        if (min <= rr) out.add(pack(x, y, z));
++                    }
++                }
++            }
++            return out;
 +        }
 +
 +        @Override
 +        public double compute(final DensityFunction.FunctionContext ctx) {
 +            int x = ctx.blockX(), y = ctx.blockY(), z = ctx.blockZ();
-+            int cx = Math.floorDiv(x, this.gap), cy = Math.floorDiv(y, this.gap), cz = Math.floorDiv(z, this.gap);
-+            double best = Double.MAX_VALUE;
-+            for (int dx = -1; dx <= 1; dx++) {
-+                for (int dy = -1; dy <= 1; dy++) {
-+                    for (int dz = -1; dz <= 1; dz++) {
-+                        int nx = cx + dx, ny = cy + dy, nz = cz + dz;
-+                        int r = rad(nx, ny, nz);
-+                        int py = ny * this.gap + this.gap / 2 + off(nx, ny, nz, r, 1);
-+                        if (py - r < Y_MIN || py + r > Y_MAX) continue;
-+                        int px = nx * this.gap + this.gap / 2 + off(nx, ny, nz, r, 2);
-+                        int pz = nz * this.gap + this.gap / 2 + off(nx, ny, nz, r, 3);
-+                        int ddx = x - px, ddy = y - py, ddz = z - pz;
-+                        double d = Math.sqrt(ddx * ddx + ddy * ddy + ddz * ddz) - r;
-+                        if (d < best) best = d;
-+                    }
-+                }
-+            }
-+            return best <= 0 ? 1.0 : -1.0;
++            int cx = Math.floorDiv(x, this.gap) * this.gap + this.gap / 2;
++            int cy = Math.floorDiv(y, this.gap) * this.gap + this.gap / 2;
++            int cz = Math.floorDiv(z, this.gap) * this.gap + this.gap / 2;
++            int rx = x - cx, ry = y - cy, rz = z - cz;
++            return shape().contains(pack(rx, ry, rz)) ? 1.0 : -1.0;
 +        }
 +
 +        @Override
@@ -128,7 +131,7 @@
      }
 +
 +    private static NoiseRouter wrap(final NoiseRouter r) {
-+        DensityFunction shape = DensityFunctions.planetoids(16, 48, 128);
++        DensityFunction shape = DensityFunctions.trefoil(20, 6, 160);
 +        DensityFunction empty = DensityFunctions.constant(-1.0);
 +        return new NoiseRouter(
 +            r.barrierNoise(), empty, empty, empty,
