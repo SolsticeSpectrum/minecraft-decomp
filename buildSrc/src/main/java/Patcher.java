@@ -1,5 +1,10 @@
+import com.github.difflib.DiffUtils;
+import com.github.difflib.UnifiedDiffUtils;
+import com.github.difflib.patch.Patch;
+import com.github.difflib.patch.PatchFailedException;
 import java.io.*;
 import java.nio.file.*;
+import java.util.*;
 import java.util.zip.*;
 
 public class Patcher {
@@ -7,13 +12,65 @@ public class Patcher {
     public static void apply(File dir, File patch) throws Exception {
         if (!patch.exists()) return;
 
-        Utils.run(dir, "patch", "-p1", "-i", patch.getAbsolutePath());
+        for (var e : parse(patch).entrySet()) {
+            File f = new File(dir, e.getKey());
+            if (!f.exists()) throw new RuntimeException("File not found: " + e.getKey());
+
+            List<String> orig = Files.readAllLines(f.toPath());
+            Patch<String> p = UnifiedDiffUtils.parseUnifiedDiff(e.getValue());
+
+            try {
+                Files.write(f.toPath(), DiffUtils.patch(orig, p));
+            } catch (PatchFailedException ex) {
+                throw new RuntimeException("Patch failed for " + e.getKey() + ": " + ex.getMessage());
+            }
+        }
     }
 
     public static void unapply(File dir, File patch) throws Exception {
         if (!patch.exists()) return;
 
-        Utils.run(dir, "patch", "-R", "-p1", "-i", patch.getAbsolutePath());
+        for (var e : parse(patch).entrySet()) {
+            File f = new File(dir, e.getKey());
+            if (!f.exists()) throw new RuntimeException("File not found: " + e.getKey());
+
+            List<String> cur = Files.readAllLines(f.toPath());
+            Patch<String> p = UnifiedDiffUtils.parseUnifiedDiff(e.getValue());
+            List<String> result = DiffUtils.unpatch(cur, p);
+
+            try {
+                List<String> check = DiffUtils.patch(result, p);
+                if (!check.equals(cur))
+                    throw new RuntimeException("Revert failed for " + e.getKey() + ": mismatch");
+            } catch (PatchFailedException ex) {
+                throw new RuntimeException("Revert failed for " + e.getKey() + ": " + ex.getMessage());
+            }
+
+            Files.write(f.toPath(), result);
+        }
+    }
+
+    private static Map<String, List<String>> parse(File patch) throws IOException {
+        Map<String, List<String>> m = new LinkedHashMap<>();
+        List<String> lines = Files.readAllLines(patch.toPath());
+        List<String> cur = null;
+        String file = null;
+
+        for (String line : lines) {
+            if (line.startsWith("--- a/")) {
+                if (cur != null && file != null) m.put(file, cur);
+                file = line.substring(6).split("\t")[0];
+
+                cur = new ArrayList<>();
+                cur.add(line);
+            } else if (cur != null) {
+                cur.add(line);
+            }
+        }
+
+        if (cur != null && file != null) m.put(file, cur);
+
+        return m;
     }
 
     public static void snap(File src, File dest) throws IOException {
@@ -43,22 +100,32 @@ public class Patcher {
 
             StringBuilder sb = new StringBuilder();
             for (String pkg : new String[]{"com", "net"}) {
-                Path pkgPath = tmp.resolve(pkg);
-                if (!Files.exists(pkgPath)) continue;
+                Path d = tmp.resolve(pkg);
+                if (!Files.exists(d)) continue;
 
-                Files.walk(pkgPath).filter(p -> p.toString().endsWith(".java")).forEach(p -> {
+                Files.walk(d).filter(p -> p.toString().endsWith(".java")).forEach(p -> {
                     String rel = tmp.relativize(p).toString();
-                    File curFile = new File(cur, rel);
-                    if (!curFile.exists()) return;
+                    File f = new File(cur, rel);
+                    if (!f.exists()) return;
 
                     try {
-                        String d = Utils.runOut(tmp.toFile(), "diff", "-u", rel, curFile.getAbsolutePath());
-                        if (!d.isEmpty()) {
-                            d = d.replaceFirst("--- " + rel, "--- a/" + rel);
-                            d = d.replaceFirst("\\+\\+\\+ .*", "+++ b/" + rel);
-                            sb.append(d);
+                        List<String> a = Files.readAllLines(p);
+                        List<String> b = Files.readAllLines(f.toPath());
+                        Patch<String> patch = DiffUtils.diff(a, b);
+
+                        if (!patch.getDeltas().isEmpty()) {
+                            List<String> u = UnifiedDiffUtils.generateUnifiedDiff(rel, rel, a, patch, 3);
+                            for (int i = 0; i < u.size(); i++) {
+                                String line = u.get(i);
+                                if (line.startsWith("--- ")) u.set(i, "--- a/" + rel);
+                                else if (line.startsWith("+++ ")) u.set(i, "+++ b/" + rel);
+                            }
+
+                            for (String line : u) sb.append(line).append("\n");
                         }
-                    } catch (Exception e) {}
+                    } catch (IOException e) {
+                        throw new UncheckedIOException(e);
+                    }
                 });
             }
 

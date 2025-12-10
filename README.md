@@ -80,7 +80,9 @@ Apply named patches to the source:
 ./gradlew modApply -Pargs=server,mod1,mod2,mod3
 ```
 
-Patches are applied in order. If a patch fails, it likely depends on another.
+Patches are applied in order. If a patch fails:
+- Already applied? Use `modRevert` first
+- Conflicting mod? Revert the other mod first
 
 ### Reverting Mods
 
@@ -90,15 +92,17 @@ Reverse patches (in reverse order):
 ./gradlew modRevert -Pargs=server,mod1,mod2,mod3
 ```
 
+If revert fails, the patch was likely already reverted or never applied.
+
 ### Packing Mods
 
 Pack changed classes into a zip for distribution:
 ```bash
-./gradlew modPack -Pargs=client,mod1,mod2,mod3
-./gradlew modPack -Pargs=server,mod1,mod2,mod3
+./gradlew modPackClient
+./gradlew modPackServer
 ```
 
-This applies the patches first, then compares against the base and outputs to `mods/client.zip` or `mods/server.zip`.
+Compiles current source and outputs changed classes to `mods/client.zip` or `mods/server.zip`.
 
 ### Using with PrismLauncher
 

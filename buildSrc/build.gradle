@@ -1,0 +1,12 @@
+plugins {
+    id 'java'
+    id 'groovy'
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'io.github.java-diff-utils:java-diff-utils:4.15'
+}

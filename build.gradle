@@ -138,18 +138,17 @@ task modGen {
     }
 }
 
-task modPack {
+task modPackClient {
     group = 'mods'
-    dependsOn modApply, ':client:compileJava', ':server:compileJava'
-    doLast {
-        def p = project.hasProperty('args') ? project.args.split(',') : null
-        if (!p || p.length < 2) throw new RuntimeException("Usage: -Pargs=side,mod1,mod2")
-        Mod.pack(rootDir, p[0])
-    }
+    dependsOn ':client:compileJava'
+    doLast { Mod.pack(rootDir, 'client') }
 }
 
-project(':client').tasks.compileJava.mustRunAfter modApply
-project(':server').tasks.compileJava.mustRunAfter modApply
+task modPackServer {
+    group = 'mods'
+    dependsOn ':server:compileJava'
+    doLast { Mod.pack(rootDir, 'server') }
+}
 
 task setupServer { group = 'setup'; dependsOn snapServer }
 task setupClient { group = 'setup'; dependsOn snapClient }
