@@ -61,14 +61,6 @@ task download {
     }
 }
 
-task decompServer(type: Exec) {
-    group = 'decompile'
-    dependsOn download
-    doFirst { delete 'decompSrc/server' }
-
-    commandLine = Setup.vfArgs(libs) + ["jars/server.jar", "decompSrc/server"]
-}
-
 task decompClient(type: Exec) {
     group = 'decompile'
     dependsOn download
@@ -79,19 +71,20 @@ task decompClient(type: Exec) {
 
 task patchServer {
     group = 'patches'
-    dependsOn decompServer
+    dependsOn decompClient
     doLast {
-        Setup.copySrc(rootDir, 'server')
+        Setup.copySrcServer(rootDir)
         Patcher.apply(file('server/src/main/java'), file('patches/server.patch'))
     }
 }
 
 task patchClient {
     group = 'patches'
-    dependsOn decompClient
+    dependsOn decompClient, patchServer
     doLast {
-        Setup.copySrc(rootDir, 'client')
+        Setup.copySrcClient(rootDir)
         Patcher.apply(file('client/src/main/java'), file('patches/client.patch'))
+        Setup.stripServer(rootDir)
     }
 }
 
@@ -157,7 +150,7 @@ task setup { group = 'setup'; dependsOn setupServer, setupClient }
 task genPatchServer {
     group = 'patches'
     doLast {
-        Patcher.diff(file('decompSrc/server'), file('server/src/main/java'),
+        Patcher.diff(file('decompSrc/client'), file('server/src/main/java'),
             file('patches/server.patch'), false)
     }
 }
@@ -170,7 +163,7 @@ task genPatchClient {
     }
 }
 
-subprojects {
+configure([project(':server'), project(':client')]) {
     jar {
         exclude 'META-INF/*.SF', 'META-INF/*.DSA', 'META-INF/*.RSA'
         from(zipTree("${rootDir}/jars/${project.name}.jar")) { include '**/package-info.class' }
@@ -180,19 +173,28 @@ subprojects {
             attributes 'Main-Class': main
         }
 
-        doFirst {
-            def cp = configurations.runtimeClasspath.collect { 'libs/' + it.name }.join(' ')
-            manifest { attributes 'Class-Path': cp }
+        if (project.name == 'client') {
+            from project(':server').sourceSets.main.output
+            duplicatesStrategy = DuplicatesStrategy.EXCLUDE
         }
     }
 
-    task copyDeps(type: Copy) {
-        from configurations.runtimeClasspath
-        into "${buildDir}/libs/libs"
+    task bundle(type: Zip) {
+        dependsOn jar
+        archiveFileName = "${project.name}-${version}-bundled.jar"
+        destinationDirectory = file("${buildDir}/libs")
+
+        from(zipTree("${rootDir}/jars/${project.name}-bundler.jar")) {
+            exclude 'META-INF/versions/**/*.jar'
+        }
+        from(jar.archiveFile) {
+            into "META-INF/versions/${version}_unobfuscated"
+            rename { "${project.name}-${version}_unobfuscated.jar" }
+        }
     }
+}
 
-    build.dependsOn copyDeps
-
+subprojects {
     dependencies {
         implementation 'com.mojang:authlib:7.0.61'
         implementation 'com.mojang:brigadier:1.3.10'
@@ -264,7 +266,7 @@ idea.project.settings {
 jar.enabled = false
 
 clean {
-    delete 'run', 'run_server', 'decompSrc', 'patchSrc'
+    delete 'run', 'run_server', 'decompSrc/client', 'patchSrc'
     delete 'client/src', 'server/src', 'client/bin', 'server/bin'
     delete 'jars', 'libs', 'vineflower.jar'
 }

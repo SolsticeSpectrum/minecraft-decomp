@@ -1,0 +1,193 @@
+--- a/net/minecraft/world/level/levelgen/DensityFunctions.java
++++ b/net/minecraft/world/level/levelgen/DensityFunctions.java
+@@ -72,6 +72,7 @@
+         register(registry, "spline", DensityFunctions.Spline.CODEC);
+         register(registry, "constant", DensityFunctions.Constant.CODEC);
+         register(registry, "y_clamped_gradient", DensityFunctions.YClampedGradient.CODEC);
++        register(registry, "backrooms", DensityFunctions.Backrooms.CODEC);
+         return register(registry, "find_top_surface", DensityFunctions.FindTopSurface.CODEC);
+     }
+ 
+@@ -280,6 +281,10 @@
+         return new DensityFunctions.FindTopSurface(density, upperBound, lowerBound, stepSize);
+     }
+ 
++    public static DensityFunction backrooms() {
++        return new DensityFunctions.Backrooms();
++    }
++
+     private record Ap2(
+         DensityFunctions.TwoArgumentSimpleFunction.Type type, DensityFunction argument1, DensityFunction argument2, double minValue, double maxValue
+     ) implements DensityFunctions.TwoArgumentSimpleFunction {
+@@ -1391,6 +1396,144 @@
+         }
+     }
+ 
++    protected static final class Backrooms implements DensityFunction.SimpleFunction {
++        public static final KeyDispatchDataCodec<Backrooms> CODEC = KeyDispatchDataCodec.of(MapCodec.unit(Backrooms::new));
++        private static final int FLOOR_Y = 64;
++        private static final int ROOM_HEIGHT = 4;
++        private static final int CELL = 16;
++        private static final int WALL = 1;
++
++        private long hash(long x, long z) {
++            long h = x * 3129871L ^ z * 116129781L;
++            return h * h * 42317861L + h * 11L;
++        }
++
++        private long hash3(long x, long y, long z) {
++            long h = x * 3129871L ^ y * 116129781L ^ z * 982451653L;
++            return h * h * 42317861L + h * 11L;
++        }
++
++        private int roomType(int cx, int cz) {
++            return (int) ((hash(cx, cz) & 0x7FFFFFFFL) % 8);
++        }
++
++        private boolean hasNorthDoor(int cx, int cz) {
++            return ((hash(cx, cz) >> 4) & 3) != 0;
++        }
++
++        private boolean hasSouthDoor(int cx, int cz) {
++            return ((hash(cx, cz) >> 6) & 3) != 0;
++        }
++
++        private boolean hasWestDoor(int cx, int cz) {
++            return ((hash(cx, cz) >> 8) & 3) != 0;
++        }
++
++        private boolean hasEastDoor(int cx, int cz) {
++            return ((hash(cx, cz) >> 10) & 3) != 0;
++        }
++
++        private boolean hasPillar(int cx, int cz, int px, int pz) {
++            int type = roomType(cx, cz);
++            if (type < 2) return false;
++            if (type < 5) {
++                return (px == 4 || px == 11) && (pz == 4 || pz == 11);
++            }
++            if (type == 5) {
++                return px == 7 || px == 8;
++            }
++            if (type == 6) {
++                return pz == 7 || pz == 8;
++            }
++            return ((hash3(cx, px, cz * 17 + pz) >> 12) & 7) == 0 && px > 2 && px < 13 && pz > 2 && pz < 13;
++        }
++
++        private boolean hasPartialWall(int cx, int cz, int lx, int lz) {
++            int type = roomType(cx, cz);
++            if (type == 3) {
++                if (lx >= 6 && lx <= 9 && lz == 8) return true;
++            }
++            if (type == 4) {
++                if (lz >= 6 && lz <= 9 && lx == 8) return true;
++            }
++            if (type == 7) {
++                long h = hash3(cx, lx / 4, cz * 31 + lz / 4);
++                if (((h >> 16) & 15) == 0) {
++                    int wx = lx % 4, wz = lz % 4;
++                    if (wx == 0 || wz == 0) return true;
++                }
++            }
++            return false;
++        }
++
++        @Override
++        public double compute(DensityFunction.FunctionContext ctx) {
++            int x = ctx.blockX(), y = ctx.blockY(), z = ctx.blockZ();
++
++            if (y < FLOOR_Y || y > FLOOR_Y + ROOM_HEIGHT) return 1.0;
++
++            int cx = Math.floorDiv(x, CELL);
++            int cz = Math.floorDiv(z, CELL);
++            int lx = Math.floorMod(x, CELL);
++            int lz = Math.floorMod(z, CELL);
++
++            boolean onFloor = y == FLOOR_Y;
++            boolean onCeiling = y == FLOOR_Y + ROOM_HEIGHT;
++            if (onFloor || onCeiling) return 1.0;
++
++            boolean northWall = lz < WALL;
++            boolean southWall = lz >= CELL - WALL;
++            boolean westWall = lx < WALL;
++            boolean eastWall = lx >= CELL - WALL;
++
++            if (northWall && westWall) return 1.0;
++            if (northWall && eastWall) return 1.0;
++            if (southWall && westWall) return 1.0;
++            if (southWall && eastWall) return 1.0;
++
++            int doorStart = 5, doorEnd = 11;
++
++            if (northWall) {
++                if (lx >= doorStart && lx < doorEnd && hasNorthDoor(cx, cz) && hasSouthDoor(cx, cz - 1)) {
++                    return -1.0;
++                }
++                return 1.0;
++            }
++            if (southWall) {
++                if (lx >= doorStart && lx < doorEnd && hasSouthDoor(cx, cz) && hasNorthDoor(cx, cz + 1)) {
++                    return -1.0;
++                }
++                return 1.0;
++            }
++            if (westWall) {
++                if (lz >= doorStart && lz < doorEnd && hasWestDoor(cx, cz) && hasEastDoor(cx - 1, cz)) {
++                    return -1.0;
++                }
++                return 1.0;
++            }
++            if (eastWall) {
++                if (lz >= doorStart && lz < doorEnd && hasEastDoor(cx, cz) && hasWestDoor(cx + 1, cz)) {
++                    return -1.0;
++                }
++                return 1.0;
++            }
++
++            if (hasPillar(cx, cz, lx, lz)) return 1.0;
++            if (hasPartialWall(cx, cz, lx, lz)) return 1.0;
++
++            return -1.0;
++        }
++
++        @Override
++        public double minValue() { return -1.0; }
++
++        @Override
++        public double maxValue() { return 1.0; }
++
++        @Override
++        public KeyDispatchDataCodec<? extends DensityFunction> codec() { return CODEC; }
++    }
++
+     private record YClampedGradient(int fromY, int toY, double fromValue, double toValue) implements DensityFunction.SimpleFunction {
+         private static final MapCodec<DensityFunctions.YClampedGradient> DATA_CODEC = RecordCodecBuilder.mapCodec(
+             i -> i.group(
+--- a/net/minecraft/world/level/levelgen/RandomState.java
++++ b/net/minecraft/world/level/levelgen/RandomState.java
+@@ -94,7 +94,8 @@
+             }
+         }
+ 
+-        this.router = settings.noiseRouter().mapAll(new NoiseWiringHelper());
++        NoiseRouter base = settings.noiseRouter().mapAll(new NoiseWiringHelper());
++        this.router = wrapBackrooms(base);
+         DensityFunction.Visitor noiseFlattener = new DensityFunction.Visitor() {
+             private final Map<DensityFunction, DensityFunction> wrapped = new HashMap<>();
+ 
+@@ -149,4 +150,14 @@
+     public PositionalRandomFactory oreRandom() {
+         return this.oreRandom;
+     }
++
++    private static NoiseRouter wrapBackrooms(final NoiseRouter r) {
++        DensityFunction backrooms = DensityFunctions.backrooms();
++        DensityFunction noFluid = DensityFunctions.constant(-1.0);
++        return new NoiseRouter(
++            r.barrierNoise(), noFluid, noFluid, noFluid,
++            r.temperature(), r.vegetation(), r.continents(), r.erosion(), r.depth(), r.ridges(),
++            noFluid, backrooms, noFluid, noFluid, noFluid
++        );
++    }
+ }

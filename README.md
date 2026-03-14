@@ -14,7 +14,7 @@ Starting with 1.21.11, Mojang ships unobfuscated JARs.
 ./gradlew setup
 ```
 
-Decompiles both client and server, applies patches, done.
+Decompiles the client jar, splits into server/client sources, applies patches, done.
 
 ## Build
 
@@ -28,11 +28,6 @@ Decompiles both client and server, applies patches, done.
 ```bash
 ./gradlew runServer
 ./gradlew runClient
-```
-
-For client, grab assets first:
-```bash
-./gradlew downloadAssets
 ```
 
 ## IntelliJ IDEA
@@ -53,8 +48,8 @@ export IDEA_JDK="/usr/lib/jvm/java-21-jetbrains"
 ├── mods/
 │   ├── client/        # client patches (mymod.patch)
 │   └── server/        # server patches (mymod.patch)
-├── server/src/        # server source
-├── client/src/        # client source
+├── server/src/        # shared/server source
+├── client/src/        # client-only source
 └── prism-instance/    # PrismLauncher instance template
 ```
 

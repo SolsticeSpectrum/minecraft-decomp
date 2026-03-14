@@ -1,5 +1,5 @@
---- a/net/minecraft/locale/Language.java	2025-12-06 15:35:12.267681826 +0100
-+++ b/net/minecraft/locale/Language.java	2025-12-06 15:39:23.317386234 +0100
+--- a/net/minecraft/locale/Language.java
++++ b/net/minecraft/locale/Language.java
 @@ -57,7 +57,7 @@
              @Override
              public FormattedCharSequence getVisualOrder(final FormattedText logicalOrderText) {
@@ -9,8 +9,8 @@
                          Style.EMPTY
                      )
                      .isPresent();
---- a/net/minecraft/util/AbstractListBuilder.java	2025-12-06 15:35:12.172679282 +0100
-+++ b/net/minecraft/util/AbstractListBuilder.java	2025-12-06 15:39:23.437389431 +0100
+--- a/net/minecraft/util/AbstractListBuilder.java
++++ b/net/minecraft/util/AbstractListBuilder.java
 @@ -27,7 +27,7 @@
  
      @Override
@@ -20,8 +20,8 @@
          return this;
      }
  
---- a/net/minecraft/util/HashOps.java	2025-12-06 15:35:12.154678800 +0100
-+++ b/net/minecraft/util/HashOps.java	2025-12-06 15:39:23.575393108 +0100
+--- a/net/minecraft/util/HashOps.java
++++ b/net/minecraft/util/HashOps.java
 @@ -53,7 +53,7 @@
      private static final Comparator<HashCode> HASH_COMPARATOR = Comparator.comparingLong(HashCode::padToLong);
      private static final Comparator<Entry<HashCode, HashCode>> MAP_ENTRY_ORDER = Entry.<HashCode, HashCode>comparingByKey(HASH_COMPARATOR)
@@ -31,8 +31,8 @@
          .thenComparing(Pair::getSecond, HASH_COMPARATOR);
      public static final HashOps CRC32C_INSTANCE = new HashOps(Hashing.crc32c());
      private final HashFunction hashFunction;
---- a/net/minecraft/util/ExtraCodecs.java	2025-12-06 15:35:12.157678880 +0100
-+++ b/net/minecraft/util/ExtraCodecs.java	2025-12-06 15:39:47.622033670 +0100
+--- a/net/minecraft/util/ExtraCodecs.java
++++ b/net/minecraft/util/ExtraCodecs.java
 @@ -286,11 +286,12 @@
              P max = l.get(1);
              return makeInterval.apply(min, max);
@@ -50,8 +50,8 @@
          Codec<I> arrayOrObjectCodec = Codec.withAlternative(arrayCodec, objectCodec);
          return Codec.either(pointCodec, arrayOrObjectCodec)
              .comapFlatMap(either -> either.map(min -> makeInterval.apply((P)min, (P)min), DataResult::success), p -> {
---- a/net/minecraft/util/Util.java	2025-12-06 15:35:12.156678853 +0100
-+++ b/net/minecraft/util/Util.java	2025-12-06 15:39:47.770037612 +0100
+--- a/net/minecraft/util/Util.java
++++ b/net/minecraft/util/Util.java
 @@ -606,7 +606,7 @@
      public static <K extends Enum<K>, V> Map<K, V> makeEnumMap(final Class<K> keyType, final Function<K, V> function) {
          EnumMap<K, V> map = new EnumMap<>(keyType);
@@ -61,8 +61,8 @@
              map.put(key, function.apply(key));
          }
  
---- a/net/minecraft/util/PlaceholderLookupProvider.java	2025-12-06 15:35:12.150678693 +0100
-+++ b/net/minecraft/util/PlaceholderLookupProvider.java	2025-12-06 15:39:47.923041687 +0100
+--- a/net/minecraft/util/PlaceholderLookupProvider.java
++++ b/net/minecraft/util/PlaceholderLookupProvider.java
 @@ -100,11 +100,11 @@
          }
  
@@ -77,8 +77,8 @@
          }
      }
  }
---- a/net/minecraft/util/EncoderCache.java	2025-12-06 15:35:12.156678853 +0100
-+++ b/net/minecraft/util/EncoderCache.java	2025-12-06 15:49:11.922017458 +0100
+--- a/net/minecraft/util/EncoderCache.java
++++ b/net/minecraft/util/EncoderCache.java
 @@ -33,7 +33,7 @@
  
              @Override
@@ -88,8 +88,8 @@
                      .getUnchecked(new EncoderCache.Key<>(codec, input, ops))
                      .map(value -> value instanceof Tag tag ? tag.copy() : value);
              }
---- a/net/minecraft/util/datafix/fixes/LeavesFix.java	2025-12-06 15:35:12.166679121 +0100
-+++ b/net/minecraft/util/datafix/fixes/LeavesFix.java	2025-12-06 15:49:12.047020771 +0100
+--- a/net/minecraft/util/datafix/fixes/LeavesFix.java
++++ b/net/minecraft/util/datafix/fixes/LeavesFix.java
 @@ -347,7 +347,7 @@
              return this.isSkippable()
                  ? section
@@ -99,8 +99,8 @@
          }
  
          public boolean isSkippable() {
---- a/net/minecraft/util/datafix/fixes/BlockEntityUUIDFix.java	2025-12-06 15:35:12.160678960 +0100
-+++ b/net/minecraft/util/datafix/fixes/BlockEntityUUIDFix.java	2025-12-06 15:49:12.192024613 +0100
+--- a/net/minecraft/util/datafix/fixes/BlockEntityUUIDFix.java
++++ b/net/minecraft/util/datafix/fixes/BlockEntityUUIDFix.java
 @@ -23,7 +23,7 @@
              .map(ownerTag -> replaceUUIDString((Dynamic<?>)ownerTag, "Id", "Id").orElse((Dynamic<?>)ownerTag))
              .map(ownerTag -> tag.remove("Owner").set("SkullOwner", (Dynamic<?>)ownerTag))
@@ -110,8 +110,8 @@
      }
  
      private Dynamic<?> updateConduit(final Dynamic<?> tag) {
---- a/net/minecraft/util/datafix/fixes/FixProjectileStoredItem.java	2025-12-06 15:35:12.168679175 +0100
-+++ b/net/minecraft/util/datafix/fixes/FixProjectileStoredItem.java	2025-12-06 15:49:12.352028853 +0100
+--- a/net/minecraft/util/datafix/fixes/FixProjectileStoredItem.java
++++ b/net/minecraft/util/datafix/fixes/FixProjectileStoredItem.java
 @@ -46,7 +46,7 @@
          final String entityName, final FixProjectileStoredItem.SubFixer<?> fixer, final Type<?> inputEntityChoiceType, final Type<T> outputEntityChoiceType
      ) {
@@ -121,8 +121,8 @@
      }
  
      private static <T> Typed<T> fixArrow(final Typed<?> typed, final Type<T> outputType) {
---- a/net/minecraft/util/datafix/fixes/OptionsKeyTranslationFix.java	2025-12-06 15:35:12.160678960 +0100
-+++ b/net/minecraft/util/datafix/fixes/OptionsKeyTranslationFix.java	2025-12-06 15:52:12.360796634 +0100
+--- a/net/minecraft/util/datafix/fixes/OptionsKeyTranslationFix.java
++++ b/net/minecraft/util/datafix/fixes/OptionsKeyTranslationFix.java
 @@ -5,6 +5,7 @@
  import com.mojang.datafixers.TypeRewriteRule;
  import com.mojang.datafixers.schemas.Schema;
@@ -140,8 +140,8 @@
          );
      }
  }
---- a/net/minecraft/util/datafix/fixes/EntitySpawnerItemVariantComponentFix.java	2025-12-06 15:35:12.163679041 +0100
-+++ b/net/minecraft/util/datafix/fixes/EntitySpawnerItemVariantComponentFix.java	2025-12-06 15:52:12.465799414 +0100
+--- a/net/minecraft/util/datafix/fixes/EntitySpawnerItemVariantComponentFix.java
++++ b/net/minecraft/util/datafix/fixes/EntitySpawnerItemVariantComponentFix.java
 @@ -32,9 +32,9 @@
                  String id = input.getOptional(idFinder).map(Pair::getSecond).orElse("");
  
@@ -155,8 +155,8 @@
                      case "minecraft:painting" -> input.updateTyped(
                          componentsFinder,
                          components -> Util.writeAndReadTypedOrThrow(components, components.getType(), EntitySpawnerItemVariantComponentFix::fixPainting)
---- a/net/minecraft/util/datafix/fixes/OptionsKeyLwjgl3Fix.java	2025-12-06 15:35:12.166679121 +0100
-+++ b/net/minecraft/util/datafix/fixes/OptionsKeyLwjgl3Fix.java	2025-12-06 15:52:40.006528575 +0100
+--- a/net/minecraft/util/datafix/fixes/OptionsKeyLwjgl3Fix.java
++++ b/net/minecraft/util/datafix/fixes/OptionsKeyLwjgl3Fix.java
 @@ -6,6 +6,7 @@
  import com.mojang.datafixers.TypeRewriteRule;
  import com.mojang.datafixers.schemas.Schema;
@@ -174,8 +174,8 @@
          );
      }
  }
---- a/net/minecraft/util/datafix/fixes/ChunkHeightAndBiomeFix.java	2025-12-06 15:35:12.168679175 +0100
-+++ b/net/minecraft/util/datafix/fixes/ChunkHeightAndBiomeFix.java	2025-12-06 15:56:17.229501386 +0100
+--- a/net/minecraft/util/datafix/fixes/ChunkHeightAndBiomeFix.java
++++ b/net/minecraft/util/datafix/fixes/ChunkHeightAndBiomeFix.java
 @@ -237,7 +237,8 @@
          } else if (oldBiomes != null && oldBiomes.length == 1024) {
              for (int sectionY = 0; sectionY < 16; sectionY++) {
@@ -186,8 +186,8 @@
              }
  
              if (increaseHeight) {
---- a/net/minecraft/util/datafix/fixes/ChunkProtoTickListFix.java	2025-12-06 15:35:12.160678960 +0100
-+++ b/net/minecraft/util/datafix/fixes/ChunkProtoTickListFix.java	2025-12-06 15:52:12.604803094 +0100
+--- a/net/minecraft/util/datafix/fixes/ChunkProtoTickListFix.java
++++ b/net/minecraft/util/datafix/fixes/ChunkProtoTickListFix.java
 @@ -182,7 +182,7 @@
          int relativeZ = pos >>> 8 & 15;
          String type = typeGetter.apply(container != null ? container.get().get(relativeX, relativeY, relativeZ) : null);
@@ -197,8 +197,8 @@
                  .put(tag.createString("i"), tag.createString(type))
                  .put(tag.createString("x"), tag.createInt(sectionX * 16 + relativeX))
                  .put(tag.createString("y"), tag.createInt(sectionY * 16 + relativeY))
---- a/net/minecraft/util/datafix/fixes/ChunkBedBlockEntityInjecterFix.java	2025-12-06 15:35:12.165679094 +0100
-+++ b/net/minecraft/util/datafix/fixes/ChunkBedBlockEntityInjecterFix.java	2025-12-06 15:52:40.137532043 +0100
+--- a/net/minecraft/util/datafix/fixes/ChunkBedBlockEntityInjecterFix.java
++++ b/net/minecraft/util/datafix/fixes/ChunkBedBlockEntityInjecterFix.java
 @@ -42,7 +42,7 @@
                  "InjectBedBlockEntityType",
                  this.getInputSchema().findChoiceType(References.BLOCK_ENTITY),
@@ -208,8 +208,8 @@
              ),
              this.fixTypeEverywhereTyped(
                  "BedBlockEntityInjecter",
---- a/net/minecraft/util/datafix/DataFixers.java	2025-12-06 15:35:12.172679282 +0100
-+++ b/net/minecraft/util/datafix/DataFixers.java	2025-12-06 15:52:40.528542395 +0100
+--- a/net/minecraft/util/datafix/DataFixers.java
++++ b/net/minecraft/util/datafix/DataFixers.java
 @@ -1150,7 +1150,7 @@
          );
          Schema v3086 = fixerUpper.addSchema(3086, SAME_NAMESPACED);
@@ -228,8 +228,8 @@
                      m.put(0, "minecraft:temperate");
                      m.put(1, "minecraft:warm");
                      m.put(2, "minecraft:cold");
---- a/net/minecraft/util/SortedArraySet.java	2025-12-06 15:35:12.150678693 +0100
-+++ b/net/minecraft/util/SortedArraySet.java	2025-12-06 15:53:14.291436199 +0100
+--- a/net/minecraft/util/SortedArraySet.java
++++ b/net/minecraft/util/SortedArraySet.java
 @@ -28,7 +28,7 @@
      }
  
@@ -239,8 +239,8 @@
      }
  
      public static <T> SortedArraySet<T> create(final Comparator<T> comparator) {
---- a/net/minecraft/commands/arguments/item/ItemInput.java	2025-12-06 15:35:12.127678077 +0100
-+++ b/net/minecraft/commands/arguments/item/ItemInput.java	2025-12-06 15:53:14.413439428 +0100
+--- a/net/minecraft/commands/arguments/item/ItemInput.java
++++ b/net/minecraft/commands/arguments/item/ItemInput.java
 @@ -78,6 +78,6 @@
      }
  
@@ -249,8 +249,8 @@
 +        return this.item.unwrapKey().map(k -> k.identifier().toString()).orElse("unknown[" + this.item + "]");
      }
  }
---- a/net/minecraft/commands/arguments/ArgumentSignatures.java	2025-12-06 15:35:12.128678103 +0100
-+++ b/net/minecraft/commands/arguments/ArgumentSignatures.java	2025-12-06 15:46:19.202438680 +0100
+--- a/net/minecraft/commands/arguments/ArgumentSignatures.java
++++ b/net/minecraft/commands/arguments/ArgumentSignatures.java
 @@ -14,7 +14,7 @@
      private static final int MAX_ARGUMENT_NAME_LENGTH = 16;
  
@@ -260,8 +260,8 @@
      }
  
      public void write(final FriendlyByteBuf output) {
---- a/net/minecraft/commands/arguments/OperationArgument.java	2025-12-06 15:35:12.126678050 +0100
-+++ b/net/minecraft/commands/arguments/OperationArgument.java	2025-12-06 15:53:14.548443002 +0100
+--- a/net/minecraft/commands/arguments/OperationArgument.java
++++ b/net/minecraft/commands/arguments/OperationArgument.java
 @@ -56,11 +56,14 @@
      }
  
@@ -282,8 +282,8 @@
      }
  
      private static OperationArgument.SimpleOperation getSimpleOperation(final String op) throws CommandSyntaxException {
---- a/net/minecraft/commands/synchronization/SuggestionProviders.java	2025-12-06 15:35:12.130678157 +0100
-+++ b/net/minecraft/commands/synchronization/SuggestionProviders.java	2025-12-06 15:53:14.782449196 +0100
+--- a/net/minecraft/commands/synchronization/SuggestionProviders.java
++++ b/net/minecraft/commands/synchronization/SuggestionProviders.java
 @@ -37,7 +37,7 @@
          if (previous != null) {
              throw new IllegalArgumentException("A command suggestion provider is already registered with the name '" + name + "'");
@@ -293,8 +293,8 @@
          }
      }
  
---- a/net/minecraft/commands/synchronization/ArgumentTypeInfos.java	2025-12-06 15:35:12.130678157 +0100
-+++ b/net/minecraft/commands/synchronization/ArgumentTypeInfos.java	2025-12-06 15:53:15.048456238 +0100
+--- a/net/minecraft/commands/synchronization/ArgumentTypeInfos.java
++++ b/net/minecraft/commands/synchronization/ArgumentTypeInfos.java
 @@ -119,11 +119,11 @@
          register(registry, "dimension", DimensionArgument.class, SingletonArgumentInfo.contextFree(DimensionArgument::dimension));
          register(registry, "gamemode", GameModeArgument.class, SingletonArgumentInfo.contextFree(GameModeArgument::gameMode));
@@ -312,8 +312,8 @@
          register(registry, "template_mirror", TemplateMirrorArgument.class, SingletonArgumentInfo.contextFree(TemplateMirrorArgument::templateMirror));
          register(registry, "template_rotation", TemplateRotationArgument.class, SingletonArgumentInfo.contextFree(TemplateRotationArgument::templateRotation));
          register(registry, "heightmap", HeightmapTypeArgument.class, SingletonArgumentInfo.contextFree(HeightmapTypeArgument::heightmap));
---- a/net/minecraft/commands/execution/tasks/BuildContexts.java	2025-12-06 15:35:12.130678157 +0100
-+++ b/net/minecraft/commands/execution/tasks/BuildContexts.java	2025-12-06 15:53:50.987400911 +0100
+--- a/net/minecraft/commands/execution/tasks/BuildContexts.java
++++ b/net/minecraft/commands/execution/tasks/BuildContexts.java
 @@ -54,7 +54,8 @@
                      }
  
@@ -339,8 +339,8 @@
                  ExecutionControl<T> executionControl = ExecutionControl.create(context, frame);
  
                  for (T executionSource : currentSources) {
---- a/net/minecraft/resources/RegistryDataLoader.java	2025-12-06 15:35:12.260681638 +0100
-+++ b/net/minecraft/resources/RegistryDataLoader.java	2025-12-06 15:53:51.181404900 +0100
+--- a/net/minecraft/resources/RegistryDataLoader.java
++++ b/net/minecraft/resources/RegistryDataLoader.java
 @@ -85,7 +85,7 @@
  
  public class RegistryDataLoader {
@@ -350,8 +350,8 @@
      private static final RegistrationInfo NETWORK_REGISTRATION_INFO = new RegistrationInfo(Optional.empty(), Lifecycle.experimental());
      private static final Function<Optional<KnownPack>, RegistrationInfo> REGISTRATION_INFO_CACHE = Util.memoize(knownPack -> {
          Lifecycle lifecycle = knownPack.map(KnownPack::isVanilla).map(info -> Lifecycle.stable()).orElse(Lifecycle.experimental());
---- a/net/minecraft/resources/HolderSetCodec.java	2025-12-06 15:35:12.260681638 +0100
-+++ b/net/minecraft/resources/HolderSetCodec.java	2025-12-06 15:53:51.389409177 +0100
+--- a/net/minecraft/resources/HolderSetCodec.java
++++ b/net/minecraft/resources/HolderSetCodec.java
 @@ -66,7 +66,7 @@
  
      private static <E> DataResult<HolderSet<E>> lookupTag(final HolderGetter<E> registry, final TagKey<E> key) {
@@ -361,8 +361,8 @@
              .orElseGet(() -> DataResult.error(() -> "Missing tag: '" + key.location() + "' in '" + key.registry().identifier() + "'"));
      }
  
---- a/net/minecraft/advancements/criterion/PlayerPredicate.java	2025-12-06 15:35:12.265681772 +0100
-+++ b/net/minecraft/advancements/criterion/PlayerPredicate.java	2025-12-06 15:54:27.984167912 +0100
+--- a/net/minecraft/advancements/criterion/PlayerPredicate.java
++++ b/net/minecraft/advancements/criterion/PlayerPredicate.java
 @@ -241,15 +241,15 @@
          private static <T> MapCodec<PlayerPredicate.StatMatcher<T>> createTypedCodec(final StatType<T> type) {
              return RecordCodecBuilder.mapCodec(
@@ -384,8 +384,8 @@
              );
          }
  
---- a/net/minecraft/advancements/criterion/MinMaxBounds.java	2025-12-06 15:35:12.264681745 +0100
-+++ b/net/minecraft/advancements/criterion/MinMaxBounds.java	2025-12-06 15:48:22.771714953 +0100
+--- a/net/minecraft/advancements/criterion/MinMaxBounds.java
++++ b/net/minecraft/advancements/criterion/MinMaxBounds.java
 @@ -57,7 +57,7 @@
          }
  
@@ -395,8 +395,8 @@
          }
  
          public static <T extends Number & Comparable<T>> MinMaxBounds.Bounds<T> exactly(final T value) {
---- a/net/minecraft/data/info/RegistryDumpReport.java	2025-12-06 15:35:12.175679362 +0100
-+++ b/net/minecraft/data/info/RegistryDumpReport.java	2025-12-06 15:54:28.129170943 +0100
+--- a/net/minecraft/data/info/RegistryDumpReport.java
++++ b/net/minecraft/data/info/RegistryDumpReport.java
 @@ -34,7 +34,7 @@
              result.addProperty("default", defaultKey.toString());
          }
@@ -406,8 +406,8 @@
          result.addProperty("protocol_id", registryId);
          JsonObject entries = new JsonObject();
          registry.listElements().forEach(holder -> {
---- a/net/minecraft/core/Registry.java	2025-12-06 15:35:12.271681933 +0100
-+++ b/net/minecraft/core/Registry.java	2025-12-06 15:43:40.083215566 +0100
+--- a/net/minecraft/core/Registry.java
++++ b/net/minecraft/core/Registry.java
 @@ -135,7 +135,7 @@
      Holder<T> wrapAsHolder(T value);
  
@@ -417,8 +417,8 @@
      }
  
      Stream<HolderSet.Named<T>> getTags();
---- a/net/minecraft/core/registries/BuiltInRegistries.java	2025-12-06 15:35:12.269681879 +0100
-+++ b/net/minecraft/core/registries/BuiltInRegistries.java	2025-12-06 15:54:28.829185578 +0100
+--- a/net/minecraft/core/registries/BuiltInRegistries.java
++++ b/net/minecraft/core/registries/BuiltInRegistries.java
 @@ -385,7 +385,7 @@
          Bootstrap.checkBootstrapCalled(() -> "registry " + name.identifier());
          Identifier key = name.identifier();
@@ -428,8 +428,8 @@
          return registry;
      }
  
---- a/net/minecraft/core/RegistrySetBuilder.java	2025-12-06 15:35:12.271681933 +0100
-+++ b/net/minecraft/core/RegistrySetBuilder.java	2025-12-06 15:54:28.545179641 +0100
+--- a/net/minecraft/core/RegistrySetBuilder.java
++++ b/net/minecraft/core/RegistrySetBuilder.java
 @@ -420,13 +420,13 @@
          }
  
@@ -446,8 +446,8 @@
          }
      }
  
---- a/net/minecraft/core/component/DataComponentPatch.java	2025-12-06 15:35:12.268681853 +0100
-+++ b/net/minecraft/core/component/DataComponentPatch.java	2025-12-06 15:45:17.545802924 +0100
+--- a/net/minecraft/core/component/DataComponentPatch.java
++++ b/net/minecraft/core/component/DataComponentPatch.java
 @@ -20,8 +20,8 @@
  
  public final class DataComponentPatch {
@@ -459,8 +459,8 @@
              if (data.isEmpty()) {
                  return EMPTY;
              } else {
---- a/net/minecraft/core/component/predicates/DataComponentPredicate.java	2025-12-06 15:35:12.269681879 +0100
-+++ b/net/minecraft/core/component/predicates/DataComponentPredicate.java	2025-12-06 15:48:22.941719459 +0100
+--- a/net/minecraft/core/component/predicates/DataComponentPredicate.java
++++ b/net/minecraft/core/component/predicates/DataComponentPredicate.java
 @@ -21,12 +21,12 @@
      );
      StreamCodec<RegistryFriendlyByteBuf, DataComponentPredicate.Single<?>> SINGLE_STREAM_CODEC = DataComponentPredicate.Type.STREAM_CODEC
@@ -478,8 +478,8 @@
          );
  
      static MapCodec<DataComponentPredicate.Single<?>> singleCodec(final String name) {
---- a/net/minecraft/core/component/DataComponentType.java	2025-12-06 15:35:12.268681853 +0100
-+++ b/net/minecraft/core/component/DataComponentType.java	2025-12-06 15:44:23.822376989 +0100
+--- a/net/minecraft/core/component/DataComponentType.java
++++ b/net/minecraft/core/component/DataComponentType.java
 @@ -110,7 +110,7 @@
  
              @Override
@@ -489,8 +489,8 @@
              }
          }
      }
---- a/net/minecraft/core/component/TypedDataComponent.java	2025-12-06 15:35:12.268681853 +0100
-+++ b/net/minecraft/core/component/TypedDataComponent.java	2025-12-06 15:44:23.958380600 +0100
+--- a/net/minecraft/core/component/TypedDataComponent.java
++++ b/net/minecraft/core/component/TypedDataComponent.java
 @@ -11,7 +11,7 @@
      public static final StreamCodec<RegistryFriendlyByteBuf, TypedDataComponent<?>> STREAM_CODEC = new StreamCodec<RegistryFriendlyByteBuf, TypedDataComponent<?>>() {
          public TypedDataComponent<?> decode(final RegistryFriendlyByteBuf input) {
@@ -509,8 +509,8 @@
          }
  
          private static <T> void encodeCap(final RegistryFriendlyByteBuf output, final TypedDataComponent<T> component) {
---- a/net/minecraft/server/packs/metadata/MetadataSectionType.java	2025-12-06 15:35:12.291682468 +0100
-+++ b/net/minecraft/server/packs/metadata/MetadataSectionType.java	2025-12-06 15:47:25.520197317 +0100
+--- a/net/minecraft/server/packs/metadata/MetadataSectionType.java
++++ b/net/minecraft/server/packs/metadata/MetadataSectionType.java
 @@ -10,7 +10,7 @@
  
      public record WithValue<T>(MetadataSectionType<T> type, T value) {
@@ -520,8 +520,8 @@
          }
      }
  }
---- a/net/minecraft/server/dialog/action/StaticAction.java	2025-12-06 15:35:12.293682522 +0100
-+++ b/net/minecraft/server/dialog/action/StaticAction.java	2025-12-06 15:56:51.791258606 +0100
+--- a/net/minecraft/server/dialog/action/StaticAction.java
++++ b/net/minecraft/server/dialog/action/StaticAction.java
 @@ -14,7 +14,7 @@
  
          for (ClickEvent.Action action : ClickEvent.Action.class.getEnumConstants()) {
@@ -531,8 +531,8 @@
                  result.put(action, mapCodec.xmap(StaticAction::new, StaticAction::value));
              }
          }
---- a/net/minecraft/server/level/ChunkTaskPriorityQueue.java	2025-12-06 15:35:12.289682415 +0100
-+++ b/net/minecraft/server/level/ChunkTaskPriorityQueue.java	2025-12-06 15:47:25.819205245 +0100
+--- a/net/minecraft/server/level/ChunkTaskPriorityQueue.java
++++ b/net/minecraft/server/level/ChunkTaskPriorityQueue.java
 @@ -10,7 +10,7 @@
  public class ChunkTaskPriorityQueue {
      public static final int PRIORITY_LEVEL_COUNT = ChunkLevel.MAX_LEVEL + 2;
@@ -542,8 +542,8 @@
          .toList();
      private volatile int topPriorityQueueIndex = PRIORITY_LEVEL_COUNT;
      private final String name;
---- a/net/minecraft/server/level/ServerLevel.java	2025-12-06 15:35:12.289682415 +0100
-+++ b/net/minecraft/server/level/ServerLevel.java	2025-12-06 15:44:23.706373909 +0100
+--- a/net/minecraft/server/level/ServerLevel.java
++++ b/net/minecraft/server/level/ServerLevel.java
 @@ -1721,7 +1721,7 @@
  
              return countByType.object2IntEntrySet()
@@ -553,8 +553,8 @@
                  .limit(5L)
                  .map(ex -> (String)ex.getKey() + ":" + ex.getIntValue())
                  .collect(Collectors.joining(","));
---- a/net/minecraft/server/network/ServerGamePacketListenerImpl.java	2025-12-06 15:35:12.276682067 +0100
-+++ b/net/minecraft/server/network/ServerGamePacketListenerImpl.java	2025-12-06 15:47:25.655200897 +0100
+--- a/net/minecraft/server/network/ServerGamePacketListenerImpl.java
++++ b/net/minecraft/server/network/ServerGamePacketListenerImpl.java
 @@ -960,7 +960,7 @@
          if (carried.has(DataComponents.WRITABLE_BOOK_CONTENT)) {
              ItemStack writtenBook = carried.transmuteCopy(Items.WRITTEN_BOOK);
@@ -564,8 +564,8 @@
              writtenBook.set(
                  DataComponents.WRITTEN_BOOK_CONTENT, new WrittenBookContent(this.filterableFromOutgoing(title), this.player.getPlainTextName(), 0, pages, true)
              );
---- a/net/minecraft/server/dedicated/Settings.java	2025-12-06 15:35:12.277682093 +0100
-+++ b/net/minecraft/server/dedicated/Settings.java	2025-12-06 15:56:17.358504197 +0100
+--- a/net/minecraft/server/dedicated/Settings.java
++++ b/net/minecraft/server/dedicated/Settings.java
 @@ -121,7 +121,7 @@
          String value = this.getStringRaw(key);
          V result = MoreObjects.firstNonNull(value != null ? deserializer.apply(value) : null, defaultValue);
@@ -575,8 +575,8 @@
      }
  
      protected <V> V get(
---- a/net/minecraft/server/jsonrpc/methods/DiscoveryService.java	2025-12-06 15:35:12.278682120 +0100
-+++ b/net/minecraft/server/jsonrpc/methods/DiscoveryService.java	2025-12-06 15:55:15.556172127 +0100
+--- a/net/minecraft/server/jsonrpc/methods/DiscoveryService.java
++++ b/net/minecraft/server/jsonrpc/methods/DiscoveryService.java
 @@ -40,8 +40,8 @@
  
          private static MapCodec<DiscoveryService.DiscoverComponents> typedSchema() {
@@ -588,8 +588,8 @@
              );
          }
      }
---- a/net/minecraft/server/jsonrpc/methods/GameRulesService.java	2025-12-06 15:35:12.278682120 +0100
-+++ b/net/minecraft/server/jsonrpc/methods/GameRulesService.java	2025-12-06 15:55:15.892179288 +0100
+--- a/net/minecraft/server/jsonrpc/methods/GameRulesService.java
++++ b/net/minecraft/server/jsonrpc/methods/GameRulesService.java
 @@ -53,14 +53,10 @@
          private static <T> MapCodec<? extends GameRulesService.GameRuleUpdate<T>> getValueAndTypeCodec(final GameRule<T> gameRule) {
              return RecordCodecBuilder.mapCodec(
@@ -608,8 +608,8 @@
              );
          }
  
---- a/net/minecraft/server/jsonrpc/api/Schema.java	2025-12-06 15:35:12.278682120 +0100
-+++ b/net/minecraft/server/jsonrpc/api/Schema.java	2025-12-06 15:55:14.778155550 +0100
+--- a/net/minecraft/server/jsonrpc/api/Schema.java
++++ b/net/minecraft/server/jsonrpc/api/Schema.java
 @@ -36,19 +36,19 @@
  public record Schema<T>(
      Optional<URI> reference, List<String> type, Optional<Schema<?>> items, Map<String, Schema<?>> properties, List<String> enumValues, Codec<T> codec
@@ -638,8 +638,8 @@
                      )
                      .apply(i, (ref, type, items, properties, enumValues) -> null)
              )
---- a/net/minecraft/server/jsonrpc/api/MethodInfo.java	2025-12-06 15:35:12.278682120 +0100
-+++ b/net/minecraft/server/jsonrpc/api/MethodInfo.java	2025-12-06 15:55:15.257165756 +0100
+--- a/net/minecraft/server/jsonrpc/api/MethodInfo.java
++++ b/net/minecraft/server/jsonrpc/api/MethodInfo.java
 @@ -28,11 +28,11 @@
      private static <Params, Result> MapCodec<MethodInfo<Params, Result>> typedCodec() {
          return RecordCodecBuilder.mapCodec(
@@ -665,8 +665,8 @@
  
          public static <Params, Result> Codec<MethodInfo.Named<Params, Result>> typedCodec() {
              return RecordCodecBuilder.create(
---- a/net/minecraft/server/jsonrpc/IncomingRpcMethods.java	2025-12-06 15:35:12.279682147 +0100
-+++ b/net/minecraft/server/jsonrpc/IncomingRpcMethods.java	2025-12-06 15:56:51.924261536 +0100
+--- a/net/minecraft/server/jsonrpc/IncomingRpcMethods.java
++++ b/net/minecraft/server/jsonrpc/IncomingRpcMethods.java
 @@ -354,7 +354,7 @@
              .description("Get the available game rule keys and their current values")
              .response("gamerules", Schema.TYPED_GAME_RULE_SCHEMA.asRef().asArray())
@@ -676,8 +676,8 @@
              .description("Update game rule value")
              .param("gamerule", Schema.UNTYPED_GAME_RULE_SCHEMA.asRef())
              .response("gamerule", Schema.TYPED_GAME_RULE_SCHEMA.asRef())
---- a/net/minecraft/world/item/HoneycombItem.java	2025-12-06 15:35:12.258681585 +0100
-+++ b/net/minecraft/world/item/HoneycombItem.java	2025-12-06 16:01:12.523198401 +0100
+--- a/net/minecraft/world/item/HoneycombItem.java
++++ b/net/minecraft/world/item/HoneycombItem.java
 @@ -142,7 +142,7 @@
          Level level = context.getLevel();
          BlockPos pos = context.getClickedPos();
@@ -687,8 +687,8 @@
              Player player = context.getPlayer();
              ItemStack itemInHand = context.getItemInHand();
              if (player instanceof ServerPlayer serverPlayer) {
---- a/net/minecraft/world/item/AdventureModePredicate.java	2025-12-06 15:35:12.255681504 +0100
-+++ b/net/minecraft/world/item/AdventureModePredicate.java	2025-12-06 15:56:17.497507226 +0100
+--- a/net/minecraft/world/item/AdventureModePredicate.java
++++ b/net/minecraft/world/item/AdventureModePredicate.java
 @@ -113,7 +113,7 @@
          return predicates.stream()
              .flatMap(predicatex -> predicatex.blocks().orElseThrow().stream())
@@ -698,8 +698,8 @@
              .toList();
      }
  
---- a/net/minecraft/world/item/crafting/RecipeMap.java	2025-12-06 15:35:12.256681531 +0100
-+++ b/net/minecraft/world/item/crafting/RecipeMap.java	2025-12-06 15:45:59.351912124 +0100
+--- a/net/minecraft/world/item/crafting/RecipeMap.java
++++ b/net/minecraft/world/item/crafting/RecipeMap.java
 @@ -34,7 +34,7 @@
      }
  
@@ -709,8 +709,8 @@
      }
  
      public Collection<RecipeHolder<?>> values() {
---- a/net/minecraft/world/item/crafting/Ingredient.java	2025-12-06 15:35:12.256681531 +0100
-+++ b/net/minecraft/world/item/crafting/Ingredient.java	2025-12-06 15:45:17.666806135 +0100
+--- a/net/minecraft/world/item/crafting/Ingredient.java
++++ b/net/minecraft/world/item/crafting/Ingredient.java
 @@ -27,7 +27,7 @@
      public static final StreamCodec<RegistryFriendlyByteBuf, Optional<Ingredient>> OPTIONAL_CONTENTS_STREAM_CODEC = ByteBufCodecs.holderSet(Registries.ITEM)
          .map(
@@ -720,8 +720,8 @@
          );
      public static final Codec<HolderSet<Item>> NON_AIR_HOLDER_SET_CODEC = HolderSetCodec.create(Registries.ITEM, Item.CODEC, false);
      public static final Codec<Ingredient> CODEC = ExtraCodecs.nonEmptyHolderSet(NON_AIR_HOLDER_SET_CODEC).xmap(Ingredient::new, i -> i.values);
---- a/net/minecraft/world/item/component/KineticWeapon.java	2025-12-06 15:35:12.250681371 +0100
-+++ b/net/minecraft/world/item/component/KineticWeapon.java	2025-12-06 15:56:17.920516442 +0100
+--- a/net/minecraft/world/item/component/KineticWeapon.java
++++ b/net/minecraft/world/item/component/KineticWeapon.java
 @@ -112,7 +112,7 @@
              for (EntityHitResult hitResult : ProjectileUtil.getHitEntitiesAlong(
                      livingEntity, attackRange, e -> PiercingWeapon.canHitEntity(livingEntity, e), ClipContext.Block.COLLIDER
@@ -731,8 +731,8 @@
                  Entity otherEntity = hitResult.getEntity();
                  if (otherEntity instanceof EnderDragonPart dragonPart) {
                      otherEntity = dragonPart.parentMob;
---- a/net/minecraft/world/item/component/PiercingWeapon.java	2025-12-06 15:35:12.252681424 +0100
-+++ b/net/minecraft/world/item/component/PiercingWeapon.java	2025-12-06 15:56:17.672511039 +0100
+--- a/net/minecraft/world/item/component/PiercingWeapon.java
++++ b/net/minecraft/world/item/component/PiercingWeapon.java
 @@ -77,7 +77,7 @@
          boolean hitSomething = false;
  
@@ -742,8 +742,8 @@
              hitSomething |= attacker.stabAttack(hand, hitResult.getEntity(), damage, true, this.dealsKnockback, this.dismounts);
          }
  
---- a/net/minecraft/world/attribute/EnvironmentAttributeMap.java	2025-12-06 15:35:12.182679549 +0100
-+++ b/net/minecraft/world/attribute/EnvironmentAttributeMap.java	2025-12-06 15:45:58.600892201 +0100
+--- a/net/minecraft/world/attribute/EnvironmentAttributeMap.java
++++ b/net/minecraft/world/attribute/EnvironmentAttributeMap.java
 @@ -18,7 +18,7 @@
      public static final EnvironmentAttributeMap EMPTY = new EnvironmentAttributeMap(Map.of());
      public static final Codec<EnvironmentAttributeMap> CODEC = Codec.lazyInitialized(
@@ -753,8 +753,8 @@
      );
      public static final Codec<EnvironmentAttributeMap> NETWORK_CODEC = CODEC.xmap(
          EnvironmentAttributeMap::filterSyncable, EnvironmentAttributeMap::filterSyncable
---- a/net/minecraft/world/attribute/modifier/FloatModifier.java	2025-12-06 15:35:12.182679549 +0100
-+++ b/net/minecraft/world/attribute/modifier/FloatModifier.java	2025-12-06 15:56:52.295269710 +0100
+--- a/net/minecraft/world/attribute/modifier/FloatModifier.java
++++ b/net/minecraft/world/attribute/modifier/FloatModifier.java
 @@ -21,11 +21,11 @@
              return (alpha, from, to) -> new FloatWithAlpha(Mth.lerp(alpha, from.value(), to.value()), Mth.lerp(alpha, from.alpha(), to.alpha()));
          }
@@ -770,8 +770,8 @@
  
      @FunctionalInterface
      public interface Simple extends FloatModifier<Float> {
---- a/net/minecraft/world/attribute/modifier/ColorModifier.java	2025-12-06 15:35:12.182679549 +0100
-+++ b/net/minecraft/world/attribute/modifier/ColorModifier.java	2025-12-06 15:57:08.820634724 +0100
+--- a/net/minecraft/world/attribute/modifier/ColorModifier.java
++++ b/net/minecraft/world/attribute/modifier/ColorModifier.java
 @@ -25,10 +25,10 @@
              return LerpFunction.ofColor();
          }
@@ -787,8 +787,8 @@
      ColorModifier<ColorModifier.BlendToGray> BLEND_TO_GRAY = new ColorModifier<ColorModifier.BlendToGray>() {
          public Integer apply(final Integer subject, final ColorModifier.BlendToGray argument) {
              int multipliedGreyscale = ARGB.scaleRGB(ARGB.greyscale(subject), argument.brightness);
---- a/net/minecraft/world/attribute/modifier/AttributeModifier.java	2025-12-06 15:35:12.182679549 +0100
-+++ b/net/minecraft/world/attribute/modifier/AttributeModifier.java	2025-12-06 15:45:58.717895305 +0100
+--- a/net/minecraft/world/attribute/modifier/AttributeModifier.java
++++ b/net/minecraft/world/attribute/modifier/AttributeModifier.java
 @@ -61,7 +61,7 @@
      );
  
@@ -798,8 +798,8 @@
      }
  
      Subject apply(Subject subject, Argument argument);
---- a/net/minecraft/world/inventory/AbstractContainerMenu.java	2025-12-06 15:35:12.182679549 +0100
-+++ b/net/minecraft/world/inventory/AbstractContainerMenu.java	2025-12-06 15:48:22.616710845 +0100
+--- a/net/minecraft/world/inventory/AbstractContainerMenu.java
++++ b/net/minecraft/world/inventory/AbstractContainerMenu.java
 @@ -446,7 +446,7 @@
                              Optional<ItemStack> newCarried = slotx.tryRemove(amount, Integer.MAX_VALUE, player);
                              newCarried.ifPresent(itemsTaken -> {
@@ -818,8 +818,8 @@
                              });
                          }
                      }
---- a/net/minecraft/world/level/biome/Climate.java	2025-12-06 15:35:12.188679710 +0100
-+++ b/net/minecraft/world/level/biome/Climate.java	2025-12-06 15:47:26.053211449 +0100
+--- a/net/minecraft/world/level/biome/Climate.java
++++ b/net/minecraft/world/level/biome/Climate.java
 @@ -268,7 +268,7 @@
                      throw new IllegalStateException("Expecting parameter space to be 7, got " + dimensions);
                  } else {
@@ -829,8 +829,8 @@
                          .collect(Collectors.toCollection(ArrayList::new));
                      return new Climate.RTree<>(build(dimensions, leaves));
                  }
---- a/net/minecraft/world/level/pathfinder/PathFinder.java	2025-12-06 15:35:12.205680165 +0100
-+++ b/net/minecraft/world/level/pathfinder/PathFinder.java	2025-12-06 15:45:18.342824074 +0100
+--- a/net/minecraft/world/level/pathfinder/PathFinder.java
++++ b/net/minecraft/world/level/pathfinder/PathFinder.java
 @@ -75,7 +75,7 @@
          this.openSet.clear();
          this.openSet.insert(from);
@@ -840,8 +840,8 @@
          int count = 0;
          Set<Target> reachedTargets = Sets.newHashSetWithExpectedSize(targets.size());
          int maxVisitedNodesAdjusted = (int)(this.maxVisitedNodes * maxVisitedNodesMultiplier);
---- a/net/minecraft/world/level/gamerules/GameRuleMap.java	2025-12-06 15:35:12.205680165 +0100
-+++ b/net/minecraft/world/level/gamerules/GameRuleMap.java	2025-12-06 15:45:59.083905014 +0100
+--- a/net/minecraft/world/level/gamerules/GameRuleMap.java
++++ b/net/minecraft/world/level/gamerules/GameRuleMap.java
 @@ -13,7 +13,7 @@
  
  public final class GameRuleMap {
@@ -851,8 +851,8 @@
      private final Reference2ObjectMap<GameRule<?>, Object> map;
  
      private GameRuleMap(final Reference2ObjectMap<GameRule<?>, Object> map) {
---- a/net/minecraft/world/level/block/BaseEntityBlock.java	2025-12-06 15:35:12.214680406 +0100
-+++ b/net/minecraft/world/level/block/BaseEntityBlock.java	2025-12-06 15:44:24.450393662 +0100
+--- a/net/minecraft/world/level/block/BaseEntityBlock.java
++++ b/net/minecraft/world/level/block/BaseEntityBlock.java
 @@ -35,6 +35,6 @@
      protected static <E extends BlockEntity, A extends BlockEntity> @Nullable BlockEntityTicker<A> createTickerHelper(
          final BlockEntityType<A> actual, final BlockEntityType<E> expected, final BlockEntityTicker<? super E> ticker
@@ -861,8 +861,8 @@
 +        return expected == actual ? (BlockEntityTicker<A>) ticker : null;
      }
  }
---- a/net/minecraft/world/level/block/Block.java	2025-12-06 15:35:12.211680326 +0100
-+++ b/net/minecraft/world/level/block/Block.java	2025-12-06 15:43:40.596229191 +0100
+--- a/net/minecraft/world/level/block/Block.java
++++ b/net/minecraft/world/level/block/Block.java
 @@ -602,7 +602,7 @@
      }
  
@@ -872,8 +872,8 @@
      }
  
      @Deprecated
---- a/net/minecraft/world/level/block/state/StateHolder.java	2025-12-06 15:35:12.210680299 +0100
-+++ b/net/minecraft/world/level/block/state/StateHolder.java	2025-12-06 15:43:40.361222949 +0100
+--- a/net/minecraft/world/level/block/state/StateHolder.java
++++ b/net/minecraft/world/level/block/state/StateHolder.java
 @@ -140,9 +140,8 @@
  
              for (Entry<Property<?>, Comparable<?>> entry : this.values.entrySet()) {
@@ -886,8 +886,8 @@
              }
  
              this.neighbours = neighbours;
---- a/net/minecraft/world/level/block/entity/TestInstanceBlockEntity.java	2025-12-06 15:35:12.217680487 +0100
-+++ b/net/minecraft/world/level/block/entity/TestInstanceBlockEntity.java	2025-12-06 15:44:24.182386547 +0100
+--- a/net/minecraft/world/level/block/entity/TestInstanceBlockEntity.java
++++ b/net/minecraft/world/level/block/entity/TestInstanceBlockEntity.java
 @@ -98,7 +98,7 @@
      }
  
@@ -897,8 +897,8 @@
      }
  
      private Optional<Holder.Reference<GameTestInstance>> getTestHolder() {
---- a/net/minecraft/world/level/storage/loot/predicates/LootItemBlockStatePropertyCondition.java	2025-12-06 15:35:12.227680755 +0100
-+++ b/net/minecraft/world/level/storage/loot/predicates/LootItemBlockStatePropertyCondition.java	2025-12-06 15:59:05.559261187 +0100
+--- a/net/minecraft/world/level/storage/loot/predicates/LootItemBlockStatePropertyCondition.java
++++ b/net/minecraft/world/level/storage/loot/predicates/LootItemBlockStatePropertyCondition.java
 @@ -27,7 +27,7 @@
      private static DataResult<LootItemBlockStatePropertyCondition> validate(final LootItemBlockStatePropertyCondition condition) {
          return condition.properties()
@@ -908,8 +908,8 @@
              .orElse(DataResult.success(condition));
      }
  
---- a/net/minecraft/world/level/storage/loot/functions/SetCustomModelDataFunction.java	2025-12-06 15:35:12.226680728 +0100
-+++ b/net/minecraft/world/level/storage/loot/functions/SetCustomModelDataFunction.java	2025-12-06 16:01:12.648201328 +0100
+--- a/net/minecraft/world/level/storage/loot/functions/SetCustomModelDataFunction.java
++++ b/net/minecraft/world/level/storage/loot/functions/SetCustomModelDataFunction.java
 @@ -22,7 +22,7 @@
  
  public class SetCustomModelDataFunction extends LootItemConditionalFunction {
@@ -919,8 +919,8 @@
      );
      public static final MapCodec<SetCustomModelDataFunction> CODEC = RecordCodecBuilder.mapCodec(
          i -> commonFields(i)
---- a/net/minecraft/world/entity/monster/piglin/PiglinAi.java	2025-12-06 15:35:12.242681156 +0100
-+++ b/net/minecraft/world/entity/monster/piglin/PiglinAi.java	2025-12-06 16:01:42.282897021 +0100
+--- a/net/minecraft/world/entity/monster/piglin/PiglinAi.java
++++ b/net/minecraft/world/entity/monster/piglin/PiglinAi.java
 @@ -172,7 +172,7 @@
          brain.addActivityAndRemoveMemoryWhenStopped(
              Activity.FIGHT,
@@ -970,8 +970,8 @@
              ),
              MemoryModuleType.RIDE_TARGET
          );
---- a/net/minecraft/world/entity/monster/piglin/StartHuntingHoglin.java	2025-12-06 15:35:12.242681156 +0100
-+++ b/net/minecraft/world/entity/monster/piglin/StartHuntingHoglin.java	2025-12-06 16:02:04.793427739 +0100
+--- a/net/minecraft/world/entity/monster/piglin/StartHuntingHoglin.java
++++ b/net/minecraft/world/entity/monster/piglin/StartHuntingHoglin.java
 @@ -16,12 +16,12 @@
                      i.registered(MemoryModuleType.NEAREST_VISIBLE_ADULT_PIGLINS)
                  )
@@ -987,8 +987,8 @@
                          return true;
                      } else {
                          return false;
---- a/net/minecraft/world/entity/monster/hoglin/HoglinAi.java	2025-12-06 15:35:12.245681237 +0100
-+++ b/net/minecraft/world/entity/monster/hoglin/HoglinAi.java	2025-12-06 16:02:04.918430691 +0100
+--- a/net/minecraft/world/entity/monster/hoglin/HoglinAi.java
++++ b/net/minecraft/world/entity/monster/hoglin/HoglinAi.java
 @@ -112,7 +112,7 @@
                  SetWalkTargetAwayFrom.entity(MemoryModuleType.AVOID_TARGET, 1.3F, 15, false),
                  createIdleMovementBehaviors(),
@@ -998,8 +998,8 @@
              ),
              MemoryModuleType.AVOID_TARGET
          );
---- a/net/minecraft/world/entity/monster/creaking/CreakingAi.java	2025-12-06 15:35:12.243681183 +0100
-+++ b/net/minecraft/world/entity/monster/creaking/CreakingAi.java	2025-12-06 16:02:26.674945418 +0100
+--- a/net/minecraft/world/entity/monster/creaking/CreakingAi.java
++++ b/net/minecraft/world/entity/monster/creaking/CreakingAi.java
 @@ -20,6 +20,7 @@
  import net.minecraft.world.entity.ai.behavior.SetWalkTargetFromLookTarget;
  import net.minecraft.world.entity.ai.behavior.StartAttacking;
@@ -1021,8 +1021,8 @@
              }
          }, new LookAtTargetSink(45, 90), new MoveToTargetSink()));
      }
---- a/net/minecraft/world/entity/SpawnPlacements.java	2025-12-06 15:35:12.249681344 +0100
-+++ b/net/minecraft/world/entity/SpawnPlacements.java	2025-12-06 16:02:26.820948877 +0100
+--- a/net/minecraft/world/entity/SpawnPlacements.java
++++ b/net/minecraft/world/entity/SpawnPlacements.java
 @@ -78,7 +78,7 @@
          final EntityType<T> type, final ServerLevelAccessor level, final EntitySpawnReason spawnReason, final BlockPos pos, final RandomSource random
      ) {
@@ -1032,8 +1032,8 @@
      }
  
      static {
---- a/net/minecraft/world/entity/ai/Brain.java	2025-12-06 15:35:12.236680995 +0100
-+++ b/net/minecraft/world/entity/ai/Brain.java	2025-12-06 15:45:18.056816484 +0100
+--- a/net/minecraft/world/entity/ai/Brain.java
++++ b/net/minecraft/world/entity/ai/Brain.java
 @@ -85,13 +85,13 @@
                                  pair -> {
                                      DataResult<MemoryModuleType<?>> typeResult = BuiltInRegistries.MEMORY_MODULE_TYPE.byNameCodec().parse(ops, pair.getFirst());
@@ -1068,8 +1068,8 @@
      }
  
      public <U> long getTimeUntilExpiry(final MemoryModuleType<U> type) {
---- a/net/minecraft/world/entity/ai/behavior/InteractWith.java	2025-12-06 15:35:12.232680888 +0100
-+++ b/net/minecraft/world/entity/ai/behavior/InteractWith.java	2025-12-06 16:02:51.030523609 +0100
+--- a/net/minecraft/world/entity/ai/behavior/InteractWith.java
++++ b/net/minecraft/world/entity/ai/behavior/InteractWith.java
 @@ -43,7 +43,8 @@
                      if (selfFilter.test(body) && entities.contains(isTargetValid)) {
                          Optional<LivingEntity> closest = entities.findClosest(mob -> mob.distanceToSqr(body) <= interactionRangeSqr && isTargetValid.test(mob));
@@ -1080,8 +1080,8 @@
                              lookTarget.set(new EntityTracker(mob, true));
                              walkTarget.set(new WalkTarget(new EntityTracker(mob, false), speedModifier, stopDistance));
                          });
---- a/net/minecraft/world/entity/variant/PriorityProvider.java	2025-12-06 15:35:12.238681049 +0100
-+++ b/net/minecraft/world/entity/variant/PriorityProvider.java	2025-12-06 15:48:23.213726668 +0100
+--- a/net/minecraft/world/entity/variant/PriorityProvider.java
++++ b/net/minecraft/world/entity/variant/PriorityProvider.java
 @@ -103,7 +103,7 @@
      }
  
@@ -1091,8 +1091,8 @@
                  PriorityProvider.UnpackedEntry::priority
              )
              .reversed();
---- a/net/minecraft/world/entity/animal/goat/GoatAi.java	2025-12-06 15:35:12.246681263 +0100
-+++ b/net/minecraft/world/entity/animal/goat/GoatAi.java	2025-12-06 16:02:51.317530435 +0100
+--- a/net/minecraft/world/entity/animal/goat/GoatAi.java
++++ b/net/minecraft/world/entity/animal/goat/GoatAi.java
 @@ -24,6 +24,7 @@
  import net.minecraft.world.entity.ai.behavior.RunOne;
  import net.minecraft.world.entity.ai.behavior.SetEntityLookTargetSometimes;
@@ -1110,8 +1110,8 @@
                  new Swim<>(0.8F),
                  new AnimalPanic(2.0F),
                  new LookAtTargetSink(45, 90),
---- a/net/minecraft/world/entity/animal/allay/AllayAi.java	2025-12-06 15:35:12.246681263 +0100
-+++ b/net/minecraft/world/entity/animal/allay/AllayAi.java	2025-12-06 16:03:16.179122719 +0100
+--- a/net/minecraft/world/entity/animal/allay/AllayAi.java
++++ b/net/minecraft/world/entity/animal/allay/AllayAi.java
 @@ -28,6 +28,7 @@
  import net.minecraft.world.entity.ai.behavior.SetEntityLookTargetSometimes;
  import net.minecraft.world.entity.ai.behavior.SetWalkTargetFromLookTarget;
@@ -1129,8 +1129,8 @@
                  new Swim<>(0.8F),
                  new AnimalPanic(2.5F),
                  new LookAtTargetSink(45, 90),
---- a/net/minecraft/world/entity/animal/happyghast/HappyGhastAi.java	2025-12-06 15:35:12.245681237 +0100
-+++ b/net/minecraft/world/entity/animal/happyghast/HappyGhastAi.java	2025-12-06 16:03:16.467129592 +0100
+--- a/net/minecraft/world/entity/animal/happyghast/HappyGhastAi.java
++++ b/net/minecraft/world/entity/animal/happyghast/HappyGhastAi.java
 @@ -14,6 +14,7 @@
  import net.minecraft.world.entity.ai.behavior.RandomStroll;
  import net.minecraft.world.entity.ai.behavior.RunOne;
@@ -1148,8 +1148,8 @@
                  new Swim<>(0.8F),
                  new AnimalPanic(2.0F, 0),
                  new LookAtTargetSink(45, 90),
---- a/net/minecraft/world/entity/EntityReference.java	2025-12-06 15:35:12.238681049 +0100
-+++ b/net/minecraft/world/entity/EntityReference.java	2025-12-06 15:45:58.854898939 +0100
+--- a/net/minecraft/world/entity/EntityReference.java
++++ b/net/minecraft/world/entity/EntityReference.java
 @@ -116,7 +116,7 @@
      }
  
@@ -1170,8 +1170,8 @@
                  .map(oldName -> OldUsersConverter.convertMobOwnerIfNecessary(level.getServer(), oldName))
                  .map(EntityReference::new)
                  .orElse(null);
---- a/net/minecraft/network/protocol/configuration/ClientboundUpdateEnabledFeaturesPacket.java	2025-12-06 15:35:12.135678291 +0100
-+++ b/net/minecraft/network/protocol/configuration/ClientboundUpdateEnabledFeaturesPacket.java	2025-12-06 16:03:36.441606907 +0100
+--- a/net/minecraft/network/protocol/configuration/ClientboundUpdateEnabledFeaturesPacket.java
++++ b/net/minecraft/network/protocol/configuration/ClientboundUpdateEnabledFeaturesPacket.java
 @@ -14,7 +14,7 @@
      );
  
@@ -1181,8 +1181,8 @@
      }
  
      private void write(final FriendlyByteBuf output) {
---- a/net/minecraft/network/protocol/common/custom/CustomPacketPayload.java	2025-12-06 15:35:12.147678612 +0100
-+++ b/net/minecraft/network/protocol/common/custom/CustomPacketPayload.java	2025-12-06 15:47:25.395194003 +0100
+--- a/net/minecraft/network/protocol/common/custom/CustomPacketPayload.java
++++ b/net/minecraft/network/protocol/common/custom/CustomPacketPayload.java
 @@ -34,7 +34,7 @@
  
              private <T extends CustomPacketPayload> void writeCap(final B output, final CustomPacketPayload.Type<T> type, final CustomPacketPayload payload) {
@@ -1192,8 +1192,8 @@
                  codec.encode(output, (T)payload);
              }
  
---- a/net/minecraft/network/chat/LastSeenMessages.java	2025-12-06 15:35:12.134678264 +0100
-+++ b/net/minecraft/network/chat/LastSeenMessages.java	2025-12-06 15:46:19.094435815 +0100
+--- a/net/minecraft/network/chat/LastSeenMessages.java
++++ b/net/minecraft/network/chat/LastSeenMessages.java
 @@ -42,7 +42,7 @@
          public static final LastSeenMessages.Packed EMPTY = new LastSeenMessages.Packed(List.of());
  
@@ -1203,8 +1203,8 @@
          }
  
          public void write(final FriendlyByteBuf output) {
---- a/net/minecraft/network/codec/StreamCodec.java	2025-12-06 15:35:12.148678639 +0100
-+++ b/net/minecraft/network/codec/StreamCodec.java	2025-12-06 15:43:39.976212724 +0100
+--- a/net/minecraft/network/codec/StreamCodec.java
++++ b/net/minecraft/network/codec/StreamCodec.java
 @@ -620,7 +620,7 @@
      }
  
@@ -1214,8 +1214,8 @@
      }
  
      @FunctionalInterface
---- a/net/minecraft/network/syncher/EntityDataSerializer.java	2025-12-06 15:35:12.149678666 +0100
-+++ b/net/minecraft/network/syncher/EntityDataSerializer.java	2025-12-06 15:43:40.216219098 +0100
+--- a/net/minecraft/network/syncher/EntityDataSerializer.java
++++ b/net/minecraft/network/syncher/EntityDataSerializer.java
 @@ -13,7 +13,7 @@
      T copy(T value);
  
@@ -1225,8 +1225,8 @@
      }
  
      public interface ForValueType<T> extends EntityDataSerializer<T> {
---- a/net/minecraft/network/syncher/EntityDataSerializers.java	2025-12-06 15:35:12.149678666 +0100
-+++ b/net/minecraft/network/syncher/EntityDataSerializers.java	2025-12-06 16:03:36.555609634 +0100
+--- a/net/minecraft/network/syncher/EntityDataSerializers.java
++++ b/net/minecraft/network/syncher/EntityDataSerializers.java
 @@ -93,7 +93,7 @@
      );
      public static final EntityDataSerializer<Direction> DIRECTION = EntityDataSerializer.forValueType(Direction.STREAM_CODEC);
@@ -1236,8 +1236,8 @@
      );
      public static final EntityDataSerializer<Optional<GlobalPos>> OPTIONAL_GLOBAL_POS = EntityDataSerializer.forValueType(
          GlobalPos.STREAM_CODEC.apply(ByteBufCodecs::optional)
---- a/net/minecraft/TracingExecutor.java	2025-12-06 15:35:12.262681692 +0100
-+++ b/net/minecraft/TracingExecutor.java	2025-12-06 15:48:23.573736210 +0100
+--- a/net/minecraft/TracingExecutor.java
++++ b/net/minecraft/TracingExecutor.java
 @@ -39,27 +39,31 @@
                  }
              });

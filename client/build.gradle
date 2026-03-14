@@ -9,6 +9,8 @@ def lwjglNatives = [
 ]
 
 dependencies {
+    implementation project(':server')
+
     // lwjgl
     implementation platform("org.lwjgl:lwjgl-bom:$lwjglVersion")
     implementation 'org.lwjgl:lwjgl'

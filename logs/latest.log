@@ -1,0 +1,9 @@
+[22:06:46] [main/ERROR]: Failed to start the minecraft server
+joptsimple.UnrecognizedOptionException: c is not a recognized option
+	at joptsimple.OptionException.unrecognizedOption(OptionException.java:108)
+	at joptsimple.OptionParser.validateOptionCharacters(OptionParser.java:633)
+	at joptsimple.OptionParser.handleShortOptionCluster(OptionParser.java:528)
+	at joptsimple.OptionParser.handleShortOptionToken(OptionParser.java:523)
+	at joptsimple.OptionParserState$2.handleArgument(OptionParserState.java:59)
+	at joptsimple.OptionParser.parse(OptionParser.java:396)
+	at net.minecraft.server.Main.main(Main.java:87)

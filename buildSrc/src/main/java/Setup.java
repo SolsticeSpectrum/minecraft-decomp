@@ -3,14 +3,15 @@ import java.io.*;
 import java.net.*;
 import java.nio.file.*;
 import java.util.*;
+import java.util.zip.*;
 
 @SuppressWarnings("unchecked")
 public class Setup {
 
-    public static void copySrc(File root, String side) throws IOException {
-        Path d = root.toPath().resolve("decompSrc/" + side);
-        Path j = root.toPath().resolve(side + "/src/main/java");
-        Path r = root.toPath().resolve(side + "/src/main/resources");
+    public static void copySrcClient(File root) throws IOException {
+        Path d = root.toPath().resolve("decompSrc/client");
+        Path j = root.toPath().resolve("client/src/main/java");
+        Path r = root.toPath().resolve("client/src/main/resources");
 
         Utils.rm(j); Utils.mkdir(j);
         Utils.cp(d.resolve("com"), j.resolve("com"));
@@ -24,10 +25,58 @@ public class Setup {
         for (File f : d.toFile().listFiles((dir, name) -> name.endsWith(".json") || name.endsWith(".jfc")))
             Files.copy(f.toPath(), r.resolve(f.getName()));
 
-        if (side.equals("client")) {
-            for (File f : d.toFile().listFiles((dir, name) -> name.endsWith(".png") || name.endsWith(".icns")))
-                Files.copy(f.toPath(), r.resolve(f.getName()));
+        for (File f : d.toFile().listFiles((dir, name) -> name.endsWith(".png") || name.endsWith(".icns")))
+            Files.copy(f.toPath(), r.resolve(f.getName()));
+    }
+
+    public static void copySrcServer(File root) throws IOException {
+        Path d = root.toPath().resolve("decompSrc/client");
+        Path j = root.toPath().resolve("server/src/main/java");
+        Path r = root.toPath().resolve("server/src/main/resources");
+
+        Set<String> classes = new HashSet<>();
+        Set<String> resources = new HashSet<>();
+        try (ZipFile zip = new ZipFile(root.toPath().resolve("jars/server.jar").toFile())) {
+            for (ZipEntry e : Collections.list(zip.entries())) {
+                if (e.isDirectory()) continue;
+                if (e.getName().endsWith(".class") && !e.getName().contains("$"))
+                    classes.add(e.getName().replace(".class", ".java"));
+                else if (!e.getName().endsWith(".class"))
+                    resources.add(e.getName());
+            }
         }
+
+        Utils.rm(j); Utils.mkdir(j);
+        copyFiltered(d, j, classes);
+
+        Utils.rm(r); Utils.mkdir(r);
+        copyFiltered(d, r, resources);
+    }
+
+    public static void stripServer(File root) throws IOException {
+        Path s = root.toPath().resolve("server/src/main/java");
+        Path c = root.toPath().resolve("client/src/main/java");
+
+        Files.walk(s).filter(p -> p.toString().endsWith(".java")).forEach(p -> {
+            try { Files.deleteIfExists(c.resolve(s.relativize(p))); } catch (IOException e) {}
+        });
+
+        Files.walk(c).sorted(Comparator.reverseOrder()).filter(Files::isDirectory).forEach(p -> {
+            try {
+                if (p.toFile().list() != null && p.toFile().list().length == 0) Files.delete(p);
+            } catch (IOException e) {}
+        });
+    }
+
+    private static void copyFiltered(Path src, Path dst, Set<String> filter) throws IOException {
+        Files.walk(src).filter(p -> !Files.isDirectory(p)).forEach(p -> {
+            String rel = src.relativize(p).toString();
+            if (!filter.contains(rel)) return;
+            try {
+                Files.createDirectories(dst.resolve(rel).getParent());
+                Files.copy(p, dst.resolve(rel), StandardCopyOption.REPLACE_EXISTING);
+            } catch (IOException e) { throw new UncheckedIOException(e); }
+        });
     }
 
     public static List<String> vfArgs(Set<String> libs) {
