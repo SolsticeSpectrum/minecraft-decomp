@@ -20,6 +20,18 @@
                  this.pixels + (sourceX + sourceY * this.getWidth()) * components,
                  sizeX,
                  sizeY,
+--- a/com/mojang/blaze3d/platform/GLX.java
++++ b/com/mojang/blaze3d/platform/GLX.java
+@@ -48,6 +48,9 @@
+             String description = descriptionPtr == 0L ? "" : MemoryUtil.memUTF8(descriptionPtr);
+             collectedErrors.add(String.format(Locale.ROOT, "GLFW error during init: [0x%X]%s", errorx, description));
+         });
++        if (System.getProperty("org.graalvm.nativeimage.imagecode") != null && System.getenv("WAYLAND_DISPLAY") != null) {
++            GLFW.glfwInitHint(0x00050003, 0x00060004);
++        }
+         if (!GLFW.glfwInit()) {
+             throw new IllegalStateException("Failed to initialize GLFW, errors: " + Joiner.on(",").join(collectedErrors));
+         } else {
 --- a/net/minecraft/client/gui/components/ChatComponent.java
 +++ b/net/minecraft/client/gui/components/ChatComponent.java
 @@ -408,8 +408,8 @@

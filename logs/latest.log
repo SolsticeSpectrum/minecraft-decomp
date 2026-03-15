@@ -1,9 +1,14 @@
-[22:06:46] [main/ERROR]: Failed to start the minecraft server
-joptsimple.UnrecognizedOptionException: c is not a recognized option
-	at joptsimple.OptionException.unrecognizedOption(OptionException.java:108)
-	at joptsimple.OptionParser.validateOptionCharacters(OptionParser.java:633)
-	at joptsimple.OptionParser.handleShortOptionCluster(OptionParser.java:528)
-	at joptsimple.OptionParser.handleShortOptionToken(OptionParser.java:523)
-	at joptsimple.OptionParserState$2.handleArgument(OptionParserState.java:59)
-	at joptsimple.OptionParser.parse(OptionParser.java:396)
-	at net.minecraft.server.Main.main(Main.java:87)
+[22:41:44] [main/ERROR]: Failed to load properties from file: server.properties
+java.nio.file.NoSuchFileException: server.properties
+	at java.base@21.0.10/sun.nio.fs.UnixFileSystemProvider.newByteChannel(UnixFileSystemProvider.java:261)
+	at java.base@21.0.10/java.nio.file.Files.newByteChannel(Files.java:379)
+	at java.base@21.0.10/java.nio.file.Files.newByteChannel(Files.java:431)
+	at java.base@21.0.10/java.nio.file.spi.FileSystemProvider.newInputStream(FileSystemProvider.java:420)
+	at java.base@21.0.10/java.nio.file.Files.newInputStream(Files.java:159)
+	at net.minecraft.server.dedicated.Settings.loadFromFile(Settings.java:38)
+	at net.minecraft.server.dedicated.DedicatedServerProperties.fromFile(DedicatedServerProperties.java:156)
+	at net.minecraft.server.dedicated.DedicatedServerSettings.<init>(DedicatedServerSettings.java:12)
+	at net.minecraft.server.Main.main(Main.java:107)
+	at java.base@21.0.10/java.lang.invoke.LambdaForm$DMH/sa346b79c.invokeStaticInit(LambdaForm$DMH)
+[22:41:44] [main/WARN]: Failed to load eula.txt
+[22:41:44] [main/INFO]: You need to agree to the EULA in order to run the server. Go to eula.txt for more info.

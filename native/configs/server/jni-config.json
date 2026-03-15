@@ -1,0 +1,545 @@
+[
+{
+  "name":"[Lsun.font.FontConfigManager$FontConfigFont;"
+},
+{
+  "name":"[Lsun.java2d.loops.GraphicsPrimitive;"
+},
+{
+  "name":"com.sun.jna.Callback"
+},
+{
+  "name":"com.sun.jna.CallbackReference",
+  "methods":[{"name":"getCallback","parameterTypes":["java.lang.Class","com.sun.jna.Pointer","boolean"] }, {"name":"getFunctionPointer","parameterTypes":["com.sun.jna.Callback","boolean"] }, {"name":"getNativeString","parameterTypes":["java.lang.Object","boolean"] }, {"name":"initializeThread","parameterTypes":["com.sun.jna.Callback","com.sun.jna.CallbackReference$AttachOptions"] }]
+},
+{
+  "name":"com.sun.jna.CallbackReference$AttachOptions"
+},
+{
+  "name":"com.sun.jna.FromNativeConverter",
+  "methods":[{"name":"nativeType","parameterTypes":[] }]
+},
+{
+  "name":"com.sun.jna.IntegerType",
+  "fields":[{"name":"value"}]
+},
+{
+  "name":"com.sun.jna.JNIEnv"
+},
+{
+  "name":"com.sun.jna.Native",
+  "methods":[{"name":"dispose","parameterTypes":[] }, {"name":"fromNative","parameterTypes":["com.sun.jna.FromNativeConverter","java.lang.Object","java.lang.reflect.Method"] }, {"name":"fromNative","parameterTypes":["java.lang.Class","java.lang.Object"] }, {"name":"fromNative","parameterTypes":["java.lang.reflect.Method","java.lang.Object"] }, {"name":"nativeType","parameterTypes":["java.lang.Class"] }, {"name":"toNative","parameterTypes":["com.sun.jna.ToNativeConverter","java.lang.Object"] }]
+},
+{
+  "name":"com.sun.jna.Native$ffi_callback",
+  "methods":[{"name":"invoke","parameterTypes":["long","long","long"] }]
+},
+{
+  "name":"com.sun.jna.NativeMapped",
+  "methods":[{"name":"toNative","parameterTypes":[] }]
+},
+{
+  "name":"com.sun.jna.Pointer",
+  "fields":[{"name":"peer"}],
+  "methods":[{"name":"<init>","parameterTypes":["long"] }]
+},
+{
+  "name":"com.sun.jna.PointerType",
+  "fields":[{"name":"pointer"}]
+},
+{
+  "name":"com.sun.jna.Structure",
+  "fields":[{"name":"memory"}, {"name":"typeInfo"}],
+  "methods":[{"name":"autoRead","parameterTypes":[] }, {"name":"autoWrite","parameterTypes":[] }, {"name":"getTypeInfo","parameterTypes":[] }, {"name":"newInstance","parameterTypes":["java.lang.Class","long"] }]
+},
+{
+  "name":"com.sun.jna.Structure$ByValue"
+},
+{
+  "name":"com.sun.jna.Structure$FFIType$FFITypes",
+  "fields":[{"name":"ffi_type_double"}, {"name":"ffi_type_float"}, {"name":"ffi_type_longdouble"}, {"name":"ffi_type_pointer"}, {"name":"ffi_type_sint16"}, {"name":"ffi_type_sint32"}, {"name":"ffi_type_sint64"}, {"name":"ffi_type_sint8"}, {"name":"ffi_type_uint16"}, {"name":"ffi_type_uint32"}, {"name":"ffi_type_uint64"}, {"name":"ffi_type_uint8"}, {"name":"ffi_type_void"}]
+},
+{
+  "name":"com.sun.jna.WString",
+  "methods":[{"name":"<init>","parameterTypes":["java.lang.String"] }]
+},
+{
+  "name":"io.netty.channel.ChannelException"
+},
+{
+  "name":"io.netty.channel.DefaultFileRegion",
+  "fields":[{"name":"file"}, {"name":"transferred"}]
+},
+{
+  "name":"io.netty.channel.epoll.LinuxSocket"
+},
+{
+  "name":"io.netty.channel.epoll.Native"
+},
+{
+  "name":"io.netty.channel.epoll.NativeDatagramPacketArray$NativeDatagramPacket",
+  "fields":[{"name":"count"}, {"name":"memoryAddress"}, {"name":"recipientAddr"}, {"name":"recipientAddrLen"}, {"name":"recipientPort"}, {"name":"recipientScopeId"}, {"name":"segmentSize"}, {"name":"senderAddr"}, {"name":"senderAddrLen"}, {"name":"senderPort"}, {"name":"senderScopeId"}]
+},
+{
+  "name":"io.netty.channel.epoll.NativeStaticallyReferencedJniMethods"
+},
+{
+  "name":"io.netty.channel.unix.Buffer"
+},
+{
+  "name":"io.netty.channel.unix.DatagramSocketAddress",
+  "methods":[{"name":"<init>","parameterTypes":["byte[]","int","int","int","io.netty.channel.unix.DatagramSocketAddress"] }]
+},
+{
+  "name":"io.netty.channel.unix.DomainDatagramSocketAddress",
+  "methods":[{"name":"<init>","parameterTypes":["byte[]","int","io.netty.channel.unix.DomainDatagramSocketAddress"] }]
+},
+{
+  "name":"io.netty.channel.unix.ErrorsStaticallyReferencedJniMethods"
+},
+{
+  "name":"io.netty.channel.unix.FileDescriptor"
+},
+{
+  "name":"io.netty.channel.unix.LimitsStaticallyReferencedJniMethods"
+},
+{
+  "name":"io.netty.channel.unix.PeerCredentials",
+  "methods":[{"name":"<init>","parameterTypes":["int","int","int[]"] }]
+},
+{
+  "name":"io.netty.channel.unix.Socket"
+},
+{
+  "name":"java.awt.AlphaComposite",
+  "fields":[{"name":"extraAlpha"}, {"name":"rule"}]
+},
+{
+  "name":"java.awt.Color",
+  "fields":[{"name":"value"}],
+  "methods":[{"name":"getRGB","parameterTypes":[] }]
+},
+{
+  "name":"java.awt.Component",
+  "fields":[{"name":"appContext"}, {"name":"background"}, {"name":"foreground"}, {"name":"graphicsConfig"}, {"name":"height"}, {"name":"isPacked"}, {"name":"name"}, {"name":"peer"}, {"name":"width"}, {"name":"x"}, {"name":"y"}],
+  "methods":[{"name":"getLocationOnScreen_NoTreeLock","parameterTypes":[] }, {"name":"getParent_NoClientCode","parameterTypes":[] }]
+},
+{
+  "name":"java.awt.GraphicsEnvironment",
+  "methods":[{"name":"getLocalGraphicsEnvironment","parameterTypes":[] }, {"name":"isHeadless","parameterTypes":[] }]
+},
+{
+  "name":"sun.java2d.SunGraphicsEnvironment",
+  "methods":[{"name":"isDisplayLocal","parameterTypes":[] }]
+},
+{
+  "name":"java.awt.Rectangle",
+  "methods":[{"name":"<init>","parameterTypes":["int","int","int","int"] }]
+},
+{
+  "name":"java.awt.event.KeyEvent",
+  "fields":[{"name":"isProxyActive"}]
+},
+{
+  "name":"java.awt.geom.AffineTransform",
+  "fields":[{"name":"m00"}, {"name":"m01"}, {"name":"m02"}, {"name":"m10"}, {"name":"m11"}, {"name":"m12"}]
+},
+{
+  "name":"java.awt.geom.GeneralPath",
+  "methods":[{"name":"<init>","parameterTypes":[] }, {"name":"<init>","parameterTypes":["int","byte[]","int","float[]","int"] }]
+},
+{
+  "name":"java.awt.geom.Path2D",
+  "fields":[{"name":"numTypes"}, {"name":"pointTypes"}, {"name":"windingRule"}]
+},
+{
+  "name":"java.awt.geom.Path2D$Float",
+  "fields":[{"name":"floatCoords"}]
+},
+{
+  "name":"java.awt.geom.Point2D$Float",
+  "fields":[{"name":"x"}, {"name":"y"}],
+  "methods":[{"name":"<init>","parameterTypes":["float","float"] }]
+},
+{
+  "name":"java.awt.geom.Rectangle2D$Float",
+  "fields":[{"name":"height"}, {"name":"width"}, {"name":"x"}, {"name":"y"}],
+  "methods":[{"name":"<init>","parameterTypes":[] }, {"name":"<init>","parameterTypes":["float","float","float","float"] }]
+},
+{
+  "name":"java.awt.image.ColorModel",
+  "fields":[{"name":"colorSpace"}, {"name":"colorSpaceType"}, {"name":"isAlphaPremultiplied"}, {"name":"is_sRGB"}, {"name":"nBits"}, {"name":"numComponents"}, {"name":"supportsAlpha"}, {"name":"transparency"}],
+  "methods":[{"name":"getRGBdefault","parameterTypes":[] }]
+},
+{
+  "name":"java.awt.image.DirectColorModel",
+  "methods":[{"name":"<init>","parameterTypes":["int","int","int","int","int"] }]
+},
+{
+  "name":"java.awt.image.IndexColorModel",
+  "fields":[{"name":"allgrayopaque"}, {"name":"map_size"}, {"name":"rgb"}, {"name":"transparent_index"}]
+},
+{
+  "name":"java.io.FileDescriptor",
+  "fields":[{"name":"fd"}]
+},
+{
+  "name":"java.io.IOException"
+},
+{
+  "name":"java.lang.Boolean",
+  "fields":[{"name":"TYPE"}, {"name":"value"}],
+  "methods":[{"name":"<init>","parameterTypes":["boolean"] }, {"name":"getBoolean","parameterTypes":["java.lang.String"] }]
+},
+{
+  "name":"java.lang.Byte",
+  "fields":[{"name":"TYPE"}, {"name":"value"}],
+  "methods":[{"name":"<init>","parameterTypes":["byte"] }]
+},
+{
+  "name":"java.lang.Character",
+  "fields":[{"name":"TYPE"}, {"name":"value"}],
+  "methods":[{"name":"<init>","parameterTypes":["char"] }]
+},
+{
+  "name":"java.lang.Class",
+  "methods":[{"name":"getComponentType","parameterTypes":[] }]
+},
+{
+  "name":"java.lang.Double",
+  "fields":[{"name":"TYPE"}, {"name":"value"}],
+  "methods":[{"name":"<init>","parameterTypes":["double"] }]
+},
+{
+  "name":"java.lang.Float",
+  "fields":[{"name":"TYPE"}, {"name":"value"}],
+  "methods":[{"name":"<init>","parameterTypes":["float"] }]
+},
+{
+  "name":"java.lang.Integer",
+  "fields":[{"name":"TYPE"}, {"name":"value"}],
+  "methods":[{"name":"<init>","parameterTypes":["int"] }]
+},
+{
+  "name":"java.lang.Long",
+  "fields":[{"name":"TYPE"}, {"name":"value"}],
+  "methods":[{"name":"<init>","parameterTypes":["long"] }]
+},
+{
+  "name":"java.lang.Object",
+  "methods":[{"name":"toString","parameterTypes":[] }]
+},
+{
+  "name":"java.lang.OutOfMemoryError"
+},
+{
+  "name":"java.lang.RuntimeException"
+},
+{
+  "name":"java.lang.Short",
+  "fields":[{"name":"TYPE"}, {"name":"value"}],
+  "methods":[{"name":"<init>","parameterTypes":["short"] }]
+},
+{
+  "name":"java.lang.String",
+  "methods":[{"name":"<init>","parameterTypes":["byte[]"] }, {"name":"<init>","parameterTypes":["byte[]","java.lang.String"] }, {"name":"getBytes","parameterTypes":[] }, {"name":"getBytes","parameterTypes":["java.lang.String"] }, {"name":"toCharArray","parameterTypes":[] }]
+},
+{
+  "name":"java.lang.System",
+  "methods":[{"name":"getProperty","parameterTypes":["java.lang.String"] }, {"name":"load","parameterTypes":["java.lang.String"] }]
+},
+{
+  "name":"java.lang.Thread",
+  "methods":[{"name":"yield","parameterTypes":[] }]
+},
+{
+  "name":"java.lang.Void",
+  "fields":[{"name":"TYPE"}]
+},
+{
+  "name":"java.lang.reflect.Method",
+  "methods":[{"name":"getParameterTypes","parameterTypes":[] }, {"name":"getReturnType","parameterTypes":[] }]
+},
+{
+  "name":"java.net.InetSocketAddress",
+  "methods":[{"name":"<init>","parameterTypes":["java.lang.String","int"] }]
+},
+{
+  "name":"java.net.PortUnreachableException"
+},
+{
+  "name":"java.nio.Buffer",
+  "fields":[{"name":"limit"}, {"name":"position"}],
+  "methods":[{"name":"limit","parameterTypes":[] }, {"name":"position","parameterTypes":[] }]
+},
+{
+  "name":"java.nio.ByteBuffer",
+  "methods":[{"name":"array","parameterTypes":[] }, {"name":"arrayOffset","parameterTypes":[] }]
+},
+{
+  "name":"java.nio.CharBuffer",
+  "methods":[{"name":"array","parameterTypes":[] }, {"name":"arrayOffset","parameterTypes":[] }]
+},
+{
+  "name":"java.nio.DirectByteBuffer"
+},
+{
+  "name":"java.nio.DoubleBuffer",
+  "methods":[{"name":"array","parameterTypes":[] }, {"name":"arrayOffset","parameterTypes":[] }]
+},
+{
+  "name":"java.nio.FloatBuffer",
+  "methods":[{"name":"array","parameterTypes":[] }, {"name":"arrayOffset","parameterTypes":[] }]
+},
+{
+  "name":"java.nio.IntBuffer",
+  "methods":[{"name":"array","parameterTypes":[] }, {"name":"arrayOffset","parameterTypes":[] }]
+},
+{
+  "name":"java.nio.LongBuffer",
+  "methods":[{"name":"array","parameterTypes":[] }, {"name":"arrayOffset","parameterTypes":[] }]
+},
+{
+  "name":"java.nio.ShortBuffer",
+  "methods":[{"name":"array","parameterTypes":[] }, {"name":"arrayOffset","parameterTypes":[] }]
+},
+{
+  "name":"java.nio.channels.ClosedChannelException",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"sun.awt.SunHints",
+  "fields":[{"name":"INTVAL_STROKE_PURE"}]
+},
+{
+  "name":"sun.awt.SunToolkit",
+  "methods":[{"name":"awtLock","parameterTypes":[] }, {"name":"awtLockNotify","parameterTypes":[] }, {"name":"awtLockNotifyAll","parameterTypes":[] }, {"name":"awtLockWait","parameterTypes":["long"] }, {"name":"awtUnlock","parameterTypes":[] }]
+},
+{
+  "name":"sun.awt.X11.XBaseWindow",
+  "fields":[{"name":"window"}],
+  "methods":[{"name":"getWindow","parameterTypes":[] }]
+},
+{
+  "name":"sun.awt.X11.XContentWindow"
+},
+{
+  "name":"sun.awt.X11.XErrorHandlerUtil",
+  "methods":[{"name":"globalErrorHandler","parameterTypes":["long","long"] }, {"name":"init","parameterTypes":["long"] }]
+},
+{
+  "name":"sun.awt.X11.XFramePeer"
+},
+{
+  "name":"sun.awt.X11.XToolkit",
+  "fields":[{"name":"modLockIsShiftLock"}, {"name":"numLockMask"}]
+},
+{
+  "name":"sun.awt.X11.XWindow",
+  "fields":[{"name":"drawState"}, {"name":"graphicsConfig"}, {"name":"target"}]
+},
+{
+  "name":"sun.awt.X11GraphicsConfig",
+  "fields":[{"name":"aData"}, {"name":"bitsPerPixel"}]
+},
+{
+  "name":"sun.awt.X11GraphicsDevice",
+  "methods":[{"name":"addDoubleBufferVisual","parameterTypes":["int"] }]
+},
+{
+  "name":"sun.awt.X11InputMethodBase",
+  "fields":[{"name":"pData"}]
+},
+{
+  "name":"sun.font.CharToGlyphMapper",
+  "methods":[{"name":"charToGlyph","parameterTypes":["int"] }]
+},
+{
+  "name":"sun.font.Font2D",
+  "methods":[{"name":"canDisplay","parameterTypes":["char"] }, {"name":"charToGlyph","parameterTypes":["int"] }, {"name":"charToVariationGlyph","parameterTypes":["int","int"] }, {"name":"getMapper","parameterTypes":[] }, {"name":"getTableBytes","parameterTypes":["int"] }]
+},
+{
+  "name":"sun.font.FontConfigManager$FcCompFont",
+  "fields":[{"name":"allFonts"}, {"name":"fcName"}, {"name":"firstFont"}]
+},
+{
+  "name":"sun.font.FontConfigManager$FontConfigFont",
+  "fields":[{"name":"familyName"}, {"name":"fontFile"}, {"name":"fullName"}, {"name":"styleStr"}],
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"sun.font.FontConfigManager$FontConfigInfo",
+  "fields":[{"name":"cacheDirs"}, {"name":"fcVersion"}]
+},
+{
+  "name":"sun.font.FontStrike",
+  "methods":[{"name":"getGlyphMetrics","parameterTypes":["int"] }]
+},
+{
+  "name":"sun.font.FontUtilities",
+  "methods":[{"name":"debugFonts","parameterTypes":[] }]
+},
+{
+  "name":"sun.font.FreetypeFontScaler",
+  "methods":[{"name":"invalidateScaler","parameterTypes":[] }]
+},
+{
+  "name":"sun.font.GlyphList",
+  "fields":[{"name":"gposx"}, {"name":"gposy"}, {"name":"images"}, {"name":"lcdRGBOrder"}, {"name":"lcdSubPixPos"}, {"name":"len"}, {"name":"positions"}, {"name":"usePositions"}]
+},
+{
+  "name":"sun.font.PhysicalStrike",
+  "fields":[{"name":"pScalerContext"}],
+  "methods":[{"name":"adjustPoint","parameterTypes":["java.awt.geom.Point2D$Float"] }, {"name":"getGlyphPoint","parameterTypes":["int","int"] }]
+},
+{
+  "name":"sun.font.StrikeMetrics",
+  "methods":[{"name":"<init>","parameterTypes":["float","float","float","float","float","float","float","float","float","float"] }]
+},
+{
+  "name":"sun.font.TrueTypeFont",
+  "methods":[{"name":"readBlock","parameterTypes":["java.nio.ByteBuffer","int","int"] }, {"name":"readBytes","parameterTypes":["int","int"] }]
+},
+{
+  "name":"sun.font.Type1Font",
+  "methods":[{"name":"readFile","parameterTypes":["java.nio.ByteBuffer"] }]
+},
+{
+  "name":"sun.java2d.Disposer",
+  "methods":[{"name":"addRecord","parameterTypes":["java.lang.Object","long","long"] }]
+},
+{
+  "name":"sun.java2d.InvalidPipeException"
+},
+{
+  "name":"sun.java2d.NullSurfaceData"
+},
+{
+  "name":"sun.java2d.SunGraphics2D",
+  "fields":[{"name":"clipRegion"}, {"name":"composite"}, {"name":"eargb"}, {"name":"lcdTextContrast"}, {"name":"pixel"}, {"name":"strokeHint"}]
+},
+{
+  "name":"sun.java2d.SurfaceData",
+  "fields":[{"name":"pData"}, {"name":"valid"}]
+},
+{
+  "name":"sun.java2d.loops.Blit",
+  "methods":[{"name":"<init>","parameterTypes":["long","sun.java2d.loops.SurfaceType","sun.java2d.loops.CompositeType","sun.java2d.loops.SurfaceType"] }]
+},
+{
+  "name":"sun.java2d.loops.BlitBg",
+  "methods":[{"name":"<init>","parameterTypes":["long","sun.java2d.loops.SurfaceType","sun.java2d.loops.CompositeType","sun.java2d.loops.SurfaceType"] }]
+},
+{
+  "name":"sun.java2d.loops.CompositeType",
+  "fields":[{"name":"AnyAlpha"}, {"name":"Src"}, {"name":"SrcNoEa"}, {"name":"SrcOver"}, {"name":"SrcOverNoEa"}, {"name":"Xor"}]
+},
+{
+  "name":"sun.java2d.loops.DrawGlyphList",
+  "methods":[{"name":"<init>","parameterTypes":["long","sun.java2d.loops.SurfaceType","sun.java2d.loops.CompositeType","sun.java2d.loops.SurfaceType"] }]
+},
+{
+  "name":"sun.java2d.loops.DrawGlyphListAA",
+  "methods":[{"name":"<init>","parameterTypes":["long","sun.java2d.loops.SurfaceType","sun.java2d.loops.CompositeType","sun.java2d.loops.SurfaceType"] }]
+},
+{
+  "name":"sun.java2d.loops.DrawGlyphListLCD",
+  "methods":[{"name":"<init>","parameterTypes":["long","sun.java2d.loops.SurfaceType","sun.java2d.loops.CompositeType","sun.java2d.loops.SurfaceType"] }]
+},
+{
+  "name":"sun.java2d.loops.DrawLine",
+  "methods":[{"name":"<init>","parameterTypes":["long","sun.java2d.loops.SurfaceType","sun.java2d.loops.CompositeType","sun.java2d.loops.SurfaceType"] }]
+},
+{
+  "name":"sun.java2d.loops.DrawParallelogram",
+  "methods":[{"name":"<init>","parameterTypes":["long","sun.java2d.loops.SurfaceType","sun.java2d.loops.CompositeType","sun.java2d.loops.SurfaceType"] }]
+},
+{
+  "name":"sun.java2d.loops.DrawPath",
+  "methods":[{"name":"<init>","parameterTypes":["long","sun.java2d.loops.SurfaceType","sun.java2d.loops.CompositeType","sun.java2d.loops.SurfaceType"] }]
+},
+{
+  "name":"sun.java2d.loops.DrawPolygons",
+  "methods":[{"name":"<init>","parameterTypes":["long","sun.java2d.loops.SurfaceType","sun.java2d.loops.CompositeType","sun.java2d.loops.SurfaceType"] }]
+},
+{
+  "name":"sun.java2d.loops.DrawRect",
+  "methods":[{"name":"<init>","parameterTypes":["long","sun.java2d.loops.SurfaceType","sun.java2d.loops.CompositeType","sun.java2d.loops.SurfaceType"] }]
+},
+{
+  "name":"sun.java2d.loops.FillParallelogram",
+  "methods":[{"name":"<init>","parameterTypes":["long","sun.java2d.loops.SurfaceType","sun.java2d.loops.CompositeType","sun.java2d.loops.SurfaceType"] }]
+},
+{
+  "name":"sun.java2d.loops.FillPath",
+  "methods":[{"name":"<init>","parameterTypes":["long","sun.java2d.loops.SurfaceType","sun.java2d.loops.CompositeType","sun.java2d.loops.SurfaceType"] }]
+},
+{
+  "name":"sun.java2d.loops.FillRect",
+  "methods":[{"name":"<init>","parameterTypes":["long","sun.java2d.loops.SurfaceType","sun.java2d.loops.CompositeType","sun.java2d.loops.SurfaceType"] }]
+},
+{
+  "name":"sun.java2d.loops.FillSpans",
+  "methods":[{"name":"<init>","parameterTypes":["long","sun.java2d.loops.SurfaceType","sun.java2d.loops.CompositeType","sun.java2d.loops.SurfaceType"] }]
+},
+{
+  "name":"sun.java2d.loops.GraphicsPrimitive",
+  "fields":[{"name":"pNativePrim"}]
+},
+{
+  "name":"sun.java2d.loops.GraphicsPrimitiveMgr",
+  "methods":[{"name":"register","parameterTypes":["sun.java2d.loops.GraphicsPrimitive[]"] }]
+},
+{
+  "name":"sun.java2d.loops.MaskBlit",
+  "methods":[{"name":"<init>","parameterTypes":["long","sun.java2d.loops.SurfaceType","sun.java2d.loops.CompositeType","sun.java2d.loops.SurfaceType"] }]
+},
+{
+  "name":"sun.java2d.loops.MaskFill",
+  "methods":[{"name":"<init>","parameterTypes":["long","sun.java2d.loops.SurfaceType","sun.java2d.loops.CompositeType","sun.java2d.loops.SurfaceType"] }]
+},
+{
+  "name":"sun.java2d.loops.ScaledBlit",
+  "methods":[{"name":"<init>","parameterTypes":["long","sun.java2d.loops.SurfaceType","sun.java2d.loops.CompositeType","sun.java2d.loops.SurfaceType"] }]
+},
+{
+  "name":"sun.java2d.loops.SurfaceType",
+  "fields":[{"name":"Any3Byte"}, {"name":"Any4Byte"}, {"name":"AnyByte"}, {"name":"AnyColor"}, {"name":"AnyInt"}, {"name":"AnyShort"}, {"name":"ByteBinary1Bit"}, {"name":"ByteBinary2Bit"}, {"name":"ByteBinary4Bit"}, {"name":"ByteGray"}, {"name":"ByteIndexed"}, {"name":"ByteIndexedBm"}, {"name":"FourByteAbgr"}, {"name":"FourByteAbgrPre"}, {"name":"Index12Gray"}, {"name":"Index8Gray"}, {"name":"IntArgb"}, {"name":"IntArgbBm"}, {"name":"IntArgbPre"}, {"name":"IntBgr"}, {"name":"IntRgb"}, {"name":"IntRgbx"}, {"name":"OpaqueColor"}, {"name":"ThreeByteBgr"}, {"name":"Ushort4444Argb"}, {"name":"Ushort555Rgb"}, {"name":"Ushort555Rgbx"}, {"name":"Ushort565Rgb"}, {"name":"UshortGray"}, {"name":"UshortIndexed"}]
+},
+{
+  "name":"sun.java2d.loops.TransformHelper",
+  "methods":[{"name":"<init>","parameterTypes":["long","sun.java2d.loops.SurfaceType","sun.java2d.loops.CompositeType","sun.java2d.loops.SurfaceType"] }]
+},
+{
+  "name":"sun.java2d.loops.XORComposite",
+  "fields":[{"name":"alphaMask"}, {"name":"xorColor"}, {"name":"xorPixel"}]
+},
+{
+  "name":"sun.java2d.pipe.Region",
+  "fields":[{"name":"bands"}, {"name":"endIndex"}, {"name":"hix"}, {"name":"hiy"}, {"name":"lox"}, {"name":"loy"}]
+},
+{
+  "name":"sun.java2d.pipe.RegionIterator",
+  "fields":[{"name":"curIndex"}, {"name":"numXbands"}, {"name":"region"}]
+},
+{
+  "name":"sun.java2d.pipe.ShapeSpanIterator",
+  "fields":[{"name":"pData"}]
+},
+{
+  "name":"sun.java2d.xr.XRBackendNative",
+  "fields":[{"name":"FMTPTR_A8"}, {"name":"FMTPTR_ARGB32"}, {"name":"MASK_XIMG"}]
+},
+{
+  "name":"sun.java2d.xr.XRSurfaceData",
+  "fields":[{"name":"picture"}, {"name":"xid"}]
+},
+{
+  "name":"sun.management.VMManagementImpl",
+  "fields":[{"name":"compTimeMonitoringSupport"}, {"name":"currentThreadCpuTimeSupport"}, {"name":"objectMonitorUsageSupport"}, {"name":"otherThreadCpuTimeSupport"}, {"name":"remoteDiagnosticCommandsSupport"}, {"name":"synchronizerUsageSupport"}, {"name":"threadAllocatedMemorySupport"}, {"name":"threadContentionMonitoringSupport"}]
+},
+{
+  "name":"sun.nio.ch.FileChannelImpl",
+  "fields":[{"name":"fd"}]
+}
+]

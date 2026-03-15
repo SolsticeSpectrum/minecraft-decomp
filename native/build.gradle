@@ -1,0 +1,8 @@
+repositories {
+    maven { url 'https://maven.fabricmc.net/' }
+}
+
+dependencies {
+    implementation 'org.graalvm.sdk:nativeimage:24.2.1'
+    implementation 'net.fabricmc:sponge-mixin:0.15.0+mixin.0.8.7'
+}

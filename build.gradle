@@ -41,6 +41,8 @@ ext {
     ]
 
     assetsVer = '29'
+    serverMain = 'net.minecraft.server.Main'
+    clientMain = 'net.minecraft.client.main.Main'
 }
 
 task download {
@@ -143,9 +145,7 @@ task modPackServer {
     doLast { Mod.pack(rootDir, 'server') }
 }
 
-task setupServer { group = 'setup'; dependsOn snapServer }
-task setupClient { group = 'setup'; dependsOn snapClient }
-task setup { group = 'setup'; dependsOn setupServer, setupClient }
+task setup { group = 'setup'; dependsOn snapServer, snapClient }
 
 task genPatchServer {
     group = 'patches'
@@ -169,7 +169,7 @@ configure([project(':server'), project(':client')]) {
         from(zipTree("${rootDir}/jars/${project.name}.jar")) { include '**/package-info.class' }
 
         manifest {
-            def main = project.name == 'server' ? 'net.minecraft.server.Main' : 'net.minecraft.client.main.Main'
+            def main = project.name == 'server' ? serverMain : clientMain
             attributes 'Main-Class': main
         }
 
@@ -192,9 +192,7 @@ configure([project(':server'), project(':client')]) {
             rename { "${project.name}-${version}_unobfuscated.jar" }
         }
     }
-}
 
-subprojects {
     dependencies {
         implementation 'com.mojang:authlib:7.0.61'
         implementation 'com.mojang:brigadier:1.3.10'
@@ -219,7 +217,7 @@ task runServer(type: JavaExec) {
     group = 'run'
     doFirst { mkdir 'run_server' }
 
-    mainClass = 'net.minecraft.server.Main'
+    mainClass = serverMain
     classpath = project(':server').sourceSets.main.runtimeClasspath
     workingDir = file('run_server')
 
@@ -231,7 +229,7 @@ task runClient(type: JavaExec) {
     dependsOn 'assets'
     doFirst { mkdir 'run' }
 
-    mainClass = 'net.minecraft.client.main.Main'
+    mainClass = clientMain
     classpath = project(':client').sourceSets.main.runtimeClasspath
     workingDir = file('run')
 
@@ -241,10 +239,89 @@ task runClient(type: JavaExec) {
             '--assetIndex', assetsVer, '--gameDir', 'run']
 }
 
+task runNativeServer(type: Exec) {
+    group = 'run'
+    doFirst { mkdir 'run_server' }
+
+    commandLine = Native.runCommand(rootDir, 'server', '--nogui')
+    workingDir = file('run_server')
+}
+
+task runNativeClient(type: Exec) {
+    group = 'run'
+    dependsOn 'assets'
+    doFirst { mkdir 'run' }
+
+    commandLine = Native.runCommand(rootDir, 'client',
+        '--version', version, '--accessToken', '0', '--assetsDir', 'assets',
+        '--assetIndex', assetsVer, '--gameDir', 'run')
+    workingDir = file('run')
+    environment '__GL_THREADED_OPTIMIZATIONS', '0'
+}
+
+task nativeServerAgent(type: JavaExec) {
+    group = 'native'
+    dependsOn ':server:jar'
+    doFirst { Native.requireGraalVM(); mkdir 'run_server' }
+
+    mainClass = serverMain
+    classpath = project(':server').sourceSets.main.runtimeClasspath
+    workingDir = file('run_server')
+    jvmArgs = [Native.agentArg(rootDir, 'server')]
+
+    args = ['--nogui']
+}
+
+task nativeClientAgent(type: JavaExec) {
+    group = 'native'
+    dependsOn ':client:jar', 'assets'
+    doFirst { Native.requireGraalVM(); mkdir 'run' }
+
+    mainClass = clientMain
+    classpath = project(':client').sourceSets.main.runtimeClasspath
+    workingDir = file('run')
+    jvmArgs = [Native.agentArg(rootDir, 'client')]
+    environment '__GL_THREADED_OPTIMIZATIONS', '0'
+
+    args = ['--version', version, '--accessToken', '0', '--assetsDir', 'assets',
+            '--assetIndex', assetsVer, '--gameDir', 'run']
+}
+
+project(':server').tasks.compileJava.mustRunAfter snapServer
+project(':client').tasks.compileJava.mustRunAfter snapClient
+
+task nativeServer(type: Exec) {
+    group = 'native'
+    dependsOn snapServer, ':server:jar', ':native:jar'
+    doFirst {
+        Native.requireGraalVM(); mkdir 'native/build'
+        def cp = Native.classpath(
+            project(':server').tasks.jar.archiveFile.get().asFile,
+            project(':server').sourceSets.main.runtimeClasspath.asPath,
+            project(':native').tasks.jar.archiveFile.get().asFile)
+        commandLine = Native.buildCommand(cp, rootDir, 'server', serverMain)
+    }
+    workingDir = file('native/build')
+}
+
+task nativeClient(type: Exec) {
+    group = 'native'
+    dependsOn snapServer, snapClient, ':client:jar', ':native:jar'
+    doFirst {
+        Native.requireGraalVM(); mkdir 'native/build'
+        def cp = Native.classpath(
+            project(':client').tasks.jar.archiveFile.get().asFile,
+            project(':client').sourceSets.main.runtimeClasspath.asPath,
+            project(':native').tasks.jar.archiveFile.get().asFile)
+        commandLine = Native.buildCommand(cp, rootDir, 'client', clientMain)
+    }
+    workingDir = file('native/build')
+}
+
 idea.project.settings {
     runConfigurations {
         'Minecraft Client'(org.jetbrains.gradle.ext.Application) {
-            mainClass = 'net.minecraft.client.main.Main'
+            mainClass = clientMain
             moduleName = "${rootProject.name}.client.main"
             workingDirectory = "${rootDir}/run"
             programParameters = "--version ${version} --accessToken 0 " +
@@ -254,7 +331,7 @@ idea.project.settings {
         }
 
         'Minecraft Server'(org.jetbrains.gradle.ext.Application) {
-            mainClass = 'net.minecraft.server.Main'
+            mainClass = serverMain
             moduleName = "${rootProject.name}.server.main"
             workingDirectory = "${rootDir}/run_server"
             programParameters = 'nogui'
@@ -267,7 +344,7 @@ jar.enabled = false
 
 clean {
     delete 'run', 'run_server', 'decompSrc/client', 'patchSrc'
-    delete 'client/src', 'server/src', 'client/bin', 'server/bin'
+    delete 'client/src', 'server/src', 'client/bin', 'server/bin', 'native/build'
     delete 'jars', 'libs', 'vineflower.jar'
 }
 

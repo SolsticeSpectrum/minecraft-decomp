@@ -7,6 +7,7 @@ Starting with 1.21.11, Mojang ships unobfuscated JARs.
 ## Requirements
 
 - JDK 21+
+- GraalVM 21+ (native builds)
 
 ## Setup
 
@@ -50,6 +51,7 @@ export IDEA_JDK="/usr/lib/jvm/java-21-jetbrains"
 │   └── server/        # server patches (mymod.patch)
 ├── server/src/        # shared/server source
 ├── client/src/        # client-only source
+├── native/            # GraalVM substitutions and configs
 └── prism-instance/    # PrismLauncher instance template
 ```
 
@@ -131,6 +133,31 @@ prism-instance/
 └── patches/
     ├── custom.unobfuscated.json    # unobfuscated jar override
     └── custom.mods.json            # jarMods component
+```
+
+## Native Builds
+
+### Build
+
+```bash
+./gradlew nativeServer
+./gradlew nativeClient
+```
+
+### Run
+
+```bash
+./gradlew runNativeServer
+./gradlew runNativeClient
+```
+
+### Reachability Metadata
+
+Run the game, trigger as many code paths as possible, then quit. Agent merges into `native/configs/`, can be run multiple times.
+
+```bash
+./gradlew nativeServerAgent
+./gradlew nativeClientAgent
 ```
 
 ## Decompiler
