@@ -1,7 +1,63 @@
 [
 {
-  "name":"net.minecraft.client.main.Main",
-  "methods":[{"name":"main","parameterTypes":["java.lang.String[]"] }]
+  "name":"net.minecraft.world.entity.boss.enderdragon.phases.DragonDeathPhase",
+  "methods":[{"name":"<init>","parameterTypes":["net.minecraft.world.entity.boss.enderdragon.EnderDragon"] }]
+},
+{
+  "name":"net.minecraft.world.entity.boss.enderdragon.phases.DragonHoldingPatternPhase",
+  "methods":[{"name":"<init>","parameterTypes":["net.minecraft.world.entity.boss.enderdragon.EnderDragon"] }]
+},
+{
+  "name":"net.minecraft.world.entity.boss.enderdragon.phases.DragonHoverPhase",
+  "methods":[{"name":"<init>","parameterTypes":["net.minecraft.world.entity.boss.enderdragon.EnderDragon"] }]
+},
+{
+  "name":"net.minecraft.world.entity.boss.enderdragon.phases.DragonChargePlayerPhase",
+  "methods":[{"name":"<init>","parameterTypes":["net.minecraft.world.entity.boss.enderdragon.EnderDragon"] }]
+},
+{
+  "name":"net.minecraft.world.entity.boss.enderdragon.phases.DragonLandingApproachPhase",
+  "methods":[{"name":"<init>","parameterTypes":["net.minecraft.world.entity.boss.enderdragon.EnderDragon"] }]
+},
+{
+  "name":"net.minecraft.world.entity.boss.enderdragon.phases.DragonLandingPhase",
+  "methods":[{"name":"<init>","parameterTypes":["net.minecraft.world.entity.boss.enderdragon.EnderDragon"] }]
+},
+{
+  "name":"net.minecraft.world.entity.boss.enderdragon.phases.DragonSittingAttackingPhase",
+  "methods":[{"name":"<init>","parameterTypes":["net.minecraft.world.entity.boss.enderdragon.EnderDragon"] }]
+},
+{
+  "name":"net.minecraft.world.entity.boss.enderdragon.phases.DragonSittingFlamingPhase",
+  "methods":[{"name":"<init>","parameterTypes":["net.minecraft.world.entity.boss.enderdragon.EnderDragon"] }]
+},
+{
+  "name":"net.minecraft.world.entity.boss.enderdragon.phases.DragonSittingScanningPhase",
+  "methods":[{"name":"<init>","parameterTypes":["net.minecraft.world.entity.boss.enderdragon.EnderDragon"] }]
+},
+{
+  "name":"net.minecraft.world.entity.boss.enderdragon.phases.DragonStrafePlayerPhase",
+  "methods":[{"name":"<init>","parameterTypes":["net.minecraft.world.entity.boss.enderdragon.EnderDragon"] }]
+},
+{
+  "name":"net.minecraft.world.entity.boss.enderdragon.phases.DragonTakeoffPhase",
+  "methods":[{"name":"<init>","parameterTypes":["net.minecraft.world.entity.boss.enderdragon.EnderDragon"] }]
+},
+{
+  "name":"com.mojang.realmsclient.dto.Backup",
+  "allPublicFields":true
+},
+{
+  "name":"com.mojang.realmsclient.dto.PlayerInfo",
+  "allPublicFields":true
+},
+{
+  "name":"com.mojang.realmsclient.dto.RealmsServer",
+  "allPublicFields":true
+},
+{
+  "name":"com.mojang.realmsclient.dto.RealmsWorldOptions",
+  "allPublicFields":true
 },
 {
   "name":"[B"
@@ -581,6 +637,10 @@
   "methods":[{"name":"getUnsafe","parameterTypes":[] }]
 },
 {
+  "name":"net.minecraft.client.main.Main",
+  "methods":[{"name":"main","parameterTypes":["java.lang.String[]"] }]
+},
+{
   "name":"net.minecraft.network.CompressionDecoder"
 },
 {
@@ -638,11 +698,31 @@
   "name":"net.minecraft.server.network.ServerConnectionListener$2"
 },
 {
+  "name":"net.minecraft.world.entity.boss.enderdragon.phases.DragonDeathPhase",
+  "methods":[{"name":"<init>","parameterTypes":["net.minecraft.world.entity.boss.enderdragon.EnderDragon"] }]
+},
+{
   "name":"net.minecraft.world.entity.boss.enderdragon.phases.DragonHoldingPatternPhase",
   "methods":[{"name":"<init>","parameterTypes":["net.minecraft.world.entity.boss.enderdragon.EnderDragon"] }]
 },
 {
   "name":"net.minecraft.world.entity.boss.enderdragon.phases.DragonHoverPhase",
+  "methods":[{"name":"<init>","parameterTypes":["net.minecraft.world.entity.boss.enderdragon.EnderDragon"] }]
+},
+{
+  "name":"net.minecraft.world.entity.boss.enderdragon.phases.DragonLandingApproachPhase",
+  "methods":[{"name":"<init>","parameterTypes":["net.minecraft.world.entity.boss.enderdragon.EnderDragon"] }]
+},
+{
+  "name":"net.minecraft.world.entity.boss.enderdragon.phases.DragonLandingPhase",
+  "methods":[{"name":"<init>","parameterTypes":["net.minecraft.world.entity.boss.enderdragon.EnderDragon"] }]
+},
+{
+  "name":"net.minecraft.world.entity.boss.enderdragon.phases.DragonSittingScanningPhase",
+  "methods":[{"name":"<init>","parameterTypes":["net.minecraft.world.entity.boss.enderdragon.EnderDragon"] }]
+},
+{
+  "name":"net.minecraft.world.entity.boss.enderdragon.phases.DragonTakeoffPhase",
   "methods":[{"name":"<init>","parameterTypes":["net.minecraft.world.entity.boss.enderdragon.EnderDragon"] }]
 },
 {

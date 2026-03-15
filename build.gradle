@@ -242,7 +242,7 @@ task runNativeServer(type: Exec) {
     group = 'run'
     doFirst { mkdir 'run_server' }
 
-    commandLine = Native.runCommand(rootDir, 'server', '')
+    commandLine = Native.runCommand(rootDir, 'server', '--nogui')
     workingDir = file('run_server')
 }
 
