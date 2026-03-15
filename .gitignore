@@ -24,6 +24,10 @@ server/bin/
 client/bin/
 *.zip
 
+# Native build
+agent-extracted-predefined-classes/
+*.lock
+
 # Run directories
 run/
 run_server/

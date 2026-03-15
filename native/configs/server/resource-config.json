@@ -7,6 +7,8 @@
   }, {
     "pattern":"\\QMETA-INF/main-class\\E"
   }, {
+    "pattern":"\\QMETA-INF/native/libnetty_transport_native_epoll.so\\E"
+  }, {
     "pattern":"\\QMETA-INF/native/libnetty_transport_native_epoll_x86_64.so\\E"
   }, {
     "pattern":"\\QMETA-INF/org/apache/logging/log4j/core/config/plugins/Log4j2Plugins.dat\\E"
@@ -75,6 +77,18 @@
   }, {
     "pattern":"\\Qlog4j2-test15615099.yml\\E"
   }, {
+    "pattern":"\\Qlog4j2-test2626b418.jsn\\E"
+  }, {
+    "pattern":"\\Qlog4j2-test2626b418.json\\E"
+  }, {
+    "pattern":"\\Qlog4j2-test2626b418.properties\\E"
+  }, {
+    "pattern":"\\Qlog4j2-test2626b418.xml\\E"
+  }, {
+    "pattern":"\\Qlog4j2-test2626b418.yaml\\E"
+  }, {
+    "pattern":"\\Qlog4j2-test2626b418.yml\\E"
+  }, {
     "pattern":"\\Qlog4j2.StatusLogger.properties\\E"
   }, {
     "pattern":"\\Qlog4j2.component.properties\\E"
@@ -104,6 +118,18 @@
     "pattern":"\\Qlog4j215615099.yaml\\E"
   }, {
     "pattern":"\\Qlog4j215615099.yml\\E"
+  }, {
+    "pattern":"\\Qlog4j22626b418.jsn\\E"
+  }, {
+    "pattern":"\\Qlog4j22626b418.json\\E"
+  }, {
+    "pattern":"\\Qlog4j22626b418.properties\\E"
+  }, {
+    "pattern":"\\Qlog4j22626b418.xml\\E"
+  }, {
+    "pattern":"\\Qlog4j22626b418.yaml\\E"
+  }, {
+    "pattern":"\\Qlog4j22626b418.yml\\E"
   }, {
     "pattern":"\\Qoshi.architecture.properties\\E"
   }, {

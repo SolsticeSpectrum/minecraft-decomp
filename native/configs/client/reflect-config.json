@@ -1,5 +1,9 @@
 [
 {
+  "name":"net.minecraft.client.main.Main",
+  "methods":[{"name":"main","parameterTypes":["java.lang.String[]"] }]
+},
+{
   "name":"[B"
 },
 {
@@ -63,6 +67,11 @@
   "methods":[{"name":"<init>","parameterTypes":["java.util.List","java.util.List"] }, {"name":"playerCertificateKeys","parameterTypes":[] }, {"name":"profilePropertyKeys","parameterTypes":[] }]
 },
 {
+  "name":"com.mojang.authlib.yggdrasil.request.JoinMinecraftServerRequest",
+  "allDeclaredFields":true,
+  "methods":[{"name":"<init>","parameterTypes":["java.lang.String","java.util.UUID","java.lang.String"] }, {"name":"accessToken","parameterTypes":[] }, {"name":"selectedProfile","parameterTypes":[] }, {"name":"serverId","parameterTypes":[] }]
+},
+{
   "name":"com.mojang.authlib.yggdrasil.response.ErrorResponse",
   "allDeclaredFields":true,
   "methods":[{"name":"<init>","parameterTypes":["java.lang.String","java.lang.String","java.lang.String","java.util.Map"] }, {"name":"details","parameterTypes":[] }, {"name":"error","parameterTypes":[] }, {"name":"errorMessage","parameterTypes":[] }, {"name":"path","parameterTypes":[] }]
@@ -87,6 +96,10 @@
 },
 {
   "name":"com.sun.crypto.provider.AESCipher$General",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"com.sun.crypto.provider.AESKeyGenerator",
   "methods":[{"name":"<init>","parameterTypes":[] }]
 },
 {
@@ -115,6 +128,10 @@
 },
 {
   "name":"com.sun.crypto.provider.HmacCore$HmacSHA384",
+  "methods":[{"name":"<init>","parameterTypes":[] }]
+},
+{
+  "name":"com.sun.crypto.provider.RSACipher",
   "methods":[{"name":"<init>","parameterTypes":[] }]
 },
 {
@@ -619,6 +636,14 @@
 },
 {
   "name":"net.minecraft.server.network.ServerConnectionListener$2"
+},
+{
+  "name":"net.minecraft.world.entity.boss.enderdragon.phases.DragonHoldingPatternPhase",
+  "methods":[{"name":"<init>","parameterTypes":["net.minecraft.world.entity.boss.enderdragon.EnderDragon"] }]
+},
+{
+  "name":"net.minecraft.world.entity.boss.enderdragon.phases.DragonHoverPhase",
+  "methods":[{"name":"<init>","parameterTypes":["net.minecraft.world.entity.boss.enderdragon.EnderDragon"] }]
 },
 {
   "name":"org.apache.logging.log4j.core.appender.AbstractAppender$Builder",

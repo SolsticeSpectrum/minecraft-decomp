@@ -129,10 +129,6 @@
   "methods":[{"name":"getLocalGraphicsEnvironment","parameterTypes":[] }, {"name":"isHeadless","parameterTypes":[] }]
 },
 {
-  "name":"sun.java2d.SunGraphicsEnvironment",
-  "methods":[{"name":"isDisplayLocal","parameterTypes":[] }]
-},
-{
   "name":"java.awt.Rectangle",
   "methods":[{"name":"<init>","parameterTypes":["int","int","int","int"] }]
 },
@@ -308,6 +304,10 @@
   "methods":[{"name":"<init>","parameterTypes":[] }]
 },
 {
+  "name":"net.minecraft.server.Main",
+  "methods":[{"name":"main","parameterTypes":["java.lang.String[]"] }]
+},
+{
   "name":"sun.awt.SunHints",
   "fields":[{"name":"INTVAL_STROKE_PURE"}]
 },
@@ -417,6 +417,10 @@
 {
   "name":"sun.java2d.SunGraphics2D",
   "fields":[{"name":"clipRegion"}, {"name":"composite"}, {"name":"eargb"}, {"name":"lcdTextContrast"}, {"name":"pixel"}, {"name":"strokeHint"}]
+},
+{
+  "name":"sun.java2d.SunGraphicsEnvironment",
+  "methods":[{"name":"isDisplayLocal","parameterTypes":[] }]
 },
 {
   "name":"sun.java2d.SurfaceData",

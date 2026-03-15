@@ -235,15 +235,14 @@ task runClient(type: JavaExec) {
 
     environment '__GL_THREADED_OPTIMIZATIONS', '0'
 
-    args = ['--version', version, '--accessToken', '0', '--assetsDir', 'assets',
-            '--assetIndex', assetsVer, '--gameDir', 'run']
+    args = Utils.clientArgs(version, assetsVer, project.properties)
 }
 
 task runNativeServer(type: Exec) {
     group = 'run'
     doFirst { mkdir 'run_server' }
 
-    commandLine = Native.runCommand(rootDir, 'server', '--nogui')
+    commandLine = Native.runCommand(rootDir, 'server', '')
     workingDir = file('run_server')
 }
 
@@ -253,8 +252,7 @@ task runNativeClient(type: Exec) {
     doFirst { mkdir 'run' }
 
     commandLine = Native.runCommand(rootDir, 'client',
-        '--version', version, '--accessToken', '0', '--assetsDir', 'assets',
-        '--assetIndex', assetsVer, '--gameDir', 'run')
+        Utils.clientArgs(version, assetsVer, project.properties).toArray(new String[0]))
     workingDir = file('run')
     environment '__GL_THREADED_OPTIMIZATIONS', '0'
 }
@@ -283,16 +281,17 @@ task nativeClientAgent(type: JavaExec) {
     jvmArgs = [Native.agentArg(rootDir, 'client')]
     environment '__GL_THREADED_OPTIMIZATIONS', '0'
 
-    args = ['--version', version, '--accessToken', '0', '--assetsDir', 'assets',
-            '--assetIndex', assetsVer, '--gameDir', 'run']
+    args = Utils.clientArgs(version, assetsVer, project.properties)
 }
 
 project(':server').tasks.compileJava.mustRunAfter snapServer
+project(':server').tasks.processResources.mustRunAfter snapServer
 project(':client').tasks.compileJava.mustRunAfter snapClient
+project(':client').tasks.processResources.mustRunAfter snapClient
 
 task nativeServer(type: Exec) {
     group = 'native'
-    dependsOn snapServer, ':server:jar', ':native:jar'
+    dependsOn ':server:jar', ':native:jar'
     doFirst {
         Native.requireGraalVM(); mkdir 'native/build'
         def cp = Native.classpath(
@@ -306,7 +305,7 @@ task nativeServer(type: Exec) {
 
 task nativeClient(type: Exec) {
     group = 'native'
-    dependsOn snapServer, snapClient, ':client:jar', ':native:jar'
+    dependsOn ':client:jar', ':native:jar'
     doFirst {
         Native.requireGraalVM(); mkdir 'native/build'
         def cp = Native.classpath(

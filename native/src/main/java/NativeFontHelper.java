@@ -11,9 +11,9 @@ public class NativeFontHelper {
                 w.write("version=1\n");
                 String[] families = {"dialog", "sansserif", "serif", "monospaced", "dialoginput"};
                 String[] styles = {"plain", "bold", "italic", "bolditalic"};
-                String[] sansNames = {"DejaVu Sans", "DejaVu Sans Bold", "DejaVu Sans Oblique", "DejaVu Sans Bold Oblique"};
-                String[] serifNames = {"DejaVu Serif", "DejaVu Serif Bold", "DejaVu Serif Oblique", "DejaVu Serif Bold Oblique"};
-                String[] monoNames = {"DejaVu Sans Mono", "DejaVu Sans Mono Bold", "DejaVu Sans Mono Oblique", "DejaVu Sans Mono Bold Oblique"};
+                String[] sansNames = {"SansSerif", "SansSerif Bold", "SansSerif Italic", "SansSerif Bold Italic"};
+                String[] serifNames = {"Serif", "Serif Bold", "Serif Italic", "Serif Bold Italic"};
+                String[] monoNames = {"Monospaced", "Monospaced Bold", "Monospaced Italic", "Monospaced Bold Italic"};
                 for (String family : families) {
                     String[] names = family.equals("serif") ? serifNames :
                                      (family.equals("monospaced") || family.equals("dialoginput")) ? monoNames : sansNames;

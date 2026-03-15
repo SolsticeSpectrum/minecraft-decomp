@@ -57,4 +57,13 @@ public class Utils {
 
         return out;
     }
+
+    public static List<String> clientArgs(String ver, String assetsVer, Map<String, Object> p) {
+        List<String> args = new ArrayList<>(Arrays.asList(
+            "--version", ver, "--accessToken", "0",
+            "--assetsDir", "assets", "--assetIndex", assetsVer, "--gameDir", "."));
+        String user = (String) p.getOrDefault("mc.username", "");
+        if (!user.isEmpty()) { args.add("--username"); args.add(user); }
+        return args;
+    }
 }

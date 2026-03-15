@@ -137,6 +137,8 @@ prism-instance/
 
 ## Native Builds
 
+Requires `./gradlew setup` first.
+
 ### Build
 
 ```bash
